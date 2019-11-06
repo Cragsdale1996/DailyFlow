@@ -1,0 +1,19 @@
+.sidebar{
+    height: 100vh;
+    background: rgba(194,90,60,1);
+}
+
+.courtesy-box{
+    height: 5%;
+}
+
+.icon-box{
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    height: 10%;
+}
+
+/*.icon-box > i {
+    width: 50%;
+}*/

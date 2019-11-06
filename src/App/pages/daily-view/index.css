@@ -1,0 +1,16 @@
+.work-session-list {
+    margin-top: 2.5vh;
+    height: 70vh;
+    width: 100%;
+
+    background: rgba(194,90,60,0.62);
+}
+
+.work-session-definition-form {
+    margin-top: 5vh;
+    height: 20vh;
+    width: 100%;
+    margin-bottom: 2.5vh;
+
+    background: rgba(194,90,60,0.62);
+}
