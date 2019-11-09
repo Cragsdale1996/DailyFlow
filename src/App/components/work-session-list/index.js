@@ -3,18 +3,13 @@ import React from "react";
 import "./index.css"
 
 export default class WorkSessionList extends React.Component {
-    constructor(props){
-        super(props);
-    }
 
     render(){
-
         return(
             <div>
                 {[...this.render_sessions()]}
             </div>
         );
-
     }
 
     render_sessions = () => {
@@ -27,10 +22,10 @@ export default class WorkSessionList extends React.Component {
 
             rendered_sessions.push(
                 <div className="work-session">
-                    Name: {session.name}
-                    Start: {session.start_time}
-                    End: {session.end_time}
-                    Location: {session.location}
+                    <div>Name: {session.name}</div>
+                    <div>Start: {session.start_time}</div>
+                    <div>End: {session.end_time}</div>
+                    <div>Location: {session.location}</div>
                 </div>
             )
         }

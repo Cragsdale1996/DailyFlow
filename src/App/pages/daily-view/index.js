@@ -17,19 +17,11 @@ import "@fullcalendar/timegrid/main.css";
 export default class DailyView extends React.Component {
 
   constructor(props){
-
     super(props);
 
-    this.calendar_ref = React.createRef();
-
     this.state = {
-
-      work_sessions: [
-
-      ]
-
+      work_sessions: []
     };
-
   }
 
   render() {
@@ -68,8 +60,14 @@ export default class DailyView extends React.Component {
   }
 
   add_work_session = (session) => {
+    session.start_time = this.convert_to_date(session.start_time) 
+    session.end_time = this.convert_to_date(session.end_time)
+
     this.setState(prevState => ( {work_sessions: [...prevState.work_sessions, session]} ) );
-    console.log(`Added Session... ${JSON.stringify(session)}`);
+  }
+
+  convert_to_date = (time_string) => {
+    return time_string
   }
 
 }

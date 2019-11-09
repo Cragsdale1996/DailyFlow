@@ -14,23 +14,23 @@ export default class WorkSessionCalendar extends React.Component {
         super(props);
 
         this.state = {
-            calendar_state: {
-                min_time:      "00:00:00",
-                max_time:      "24:00:00",
-                slot_duration: "00:30:00",
-                height:        755,
-                weekends:      true,
-                now_indicator: true,
-                column_header: false,
-                all_day_slot:  false,
-                header: {
-                  left:   false,
-                  center: false,
-                  right:  false
-                },
-                events: []
-            }
+            min_time:      "00:00:00",
+            max_time:      "24:00:00",
+            slot_duration: "00:15:00",
+            height:        755,
+            weekends:      true,
+            now_indicator: true,
+            column_header: false,
+            all_day_slot:  false,
+            header: {
+                left:   false,
+                center: false,
+                right:  false
+            },
+            events: this.create_events(props.sessions)
         }
+
+        this.calendar_ref = React.createRef();
     }
 
     render(){
@@ -41,17 +41,17 @@ export default class WorkSessionCalendar extends React.Component {
               plugins      = {[dayGridPlugin, timeGridPlugin, interactionPlugin]}
               ref          = {this.calendar_ref}
 
-              minTime      = {this.state.calendar_state.min_time}
-              maxTime      = {this.state.calendar_state.max_time}
-              slotDuration = {this.state.calendar_state.slot_duration}
-              height       = {this.state.calendar_state.height}
-              allDaySlot   = {this.state.calendar_state.all_day_slot}
-              columnHeader = {this.state.calendar_state.column_header}
-              weekends     = {this.state.calendar_state.weekends}
-              header       = {this.state.calendar_state.header}
-              nowIndicator = {this.state.calendar_state.now_indicator}
+              minTime      = {this.state.min_time}
+              maxTime      = {this.state.max_time}
+              slotDuration = {this.state.slot_duration}
+              height       = {this.state.height}
+              allDaySlot   = {this.state.all_day_slot}
+              columnHeader = {this.state.column_header}
+              weekends     = {this.state.weekends}
+              header       = {this.state.header}
+              nowIndicator = {this.state.now_indicator}
 
-              events       = {this.state.calendar_state.events}
+              events       = {this.state.events}
 
               windowResize = {this.adjust_size}
             />
@@ -59,29 +59,30 @@ export default class WorkSessionCalendar extends React.Component {
 
     }
 
-    create_events = (work_sessions) => {
+    componentDidUpdate(prevProps){
+        if(prevProps.sessions !== undefined && prevProps.sessions.length !== this.props.sessions.length){
+            this.setState({events: this.create_events(this.props.sessions)})
+        }
+    }
 
+    create_events = (sessions) => {
+
+        if (sessions == null) return [];
+        
         let events = [];
+        for(let i = 0; i < sessions.length; i++){
 
-        let current_date = new Date();
-
-        for(let i = 0; i < work_sessions.length; i++){
-
-            const ws = work_sessions[i];
+            const ws = sessions[i];
 
             events.push({
                 title:  ws.name,
-                start:  ws.start_time,
-                end:    ws.end_time,
+                start:  new Date(),//ws.start_time,
+                //end:    ws.end_time,
                 allDay: false
             });
         }
 
-        this.setState(prev_state => {
-            let calendar_state = {...prev_state.calendar_state};
-            calendar_state.events = events;
-            return {calendar_state};
-        });
+        return events;
 
     }
 

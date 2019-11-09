@@ -3,6 +3,8 @@
     height: 70vh;
     width: 100%;
 
+    overflow: scroll;
+
     background: rgba(194,90,60,0.62);
 }
 
