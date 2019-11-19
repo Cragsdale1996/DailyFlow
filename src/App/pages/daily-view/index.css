@@ -1,6 +1,6 @@
 .work-session-list {
     margin-top: 2.5vh;
-    height: 70vh;
+    height: 60vh;
     width: 100%;
 
     overflow: scroll;
@@ -10,7 +10,7 @@
 
 .work-session-definition-form {
     margin-top: 5vh;
-    height: 20vh;
+    height: 30vh;
     width: 100%;
     margin-bottom: 2.5vh;
 

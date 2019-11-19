@@ -23,13 +23,17 @@ export default class WorkSessionList extends React.Component {
             rendered_sessions.push(
                 <div className="work-session">
                     <div>Name: {session.name}</div>
-                    <div>Start: {session.start_time}</div>
-                    <div>End: {session.end_time}</div>
+                    <div>Start: {this.render_date(session.start)}</div>
+                    <div>End: {this.render_date(session.end)}</div>
                     <div>Location: {session.location}</div>
                 </div>
             )
         }
 
         return rendered_sessions;
+    }
+
+    render_date = (date) => {
+        return `${date.getMonth()+1}/${date.getDate()}, ${date.getHours()}:${date.getSeconds()}`
     }
 }

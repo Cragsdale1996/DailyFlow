@@ -60,14 +60,14 @@ export default class DailyView extends React.Component {
   }
 
   add_work_session = (session) => {
-    session.start_time = this.convert_to_date(session.start_time) 
-    session.end_time = this.convert_to_date(session.end_time)
+    session.start = this.convert_to_date(session.start) 
+    session.end = this.convert_to_date(session.end)
 
     this.setState(prevState => ( {work_sessions: [...prevState.work_sessions, session]} ) );
   }
 
-  convert_to_date = (time_string) => {
-    return time_string
+  convert_to_date = (date_string) => {
+    return new Date(date_string);
   }
 
 }
