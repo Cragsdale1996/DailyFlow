@@ -3,11 +3,8 @@ import React from "react";
 export default class WorkSessionForm extends React.Component {
 
     constructor(props){
-
         super(props);
-
         let [s, e] = this.get_start_end();
-        
         this.state = {
             name: '',
             start: s,
@@ -22,7 +19,6 @@ export default class WorkSessionForm extends React.Component {
             //
             //]
         };
-
     }
 
     get_start_end = () => {
@@ -42,8 +38,6 @@ export default class WorkSessionForm extends React.Component {
     handleSubmit = (event) => { 
         event.preventDefault();
         this.props.onSubmittal(this.state);
-
-        console.log(this.state)
 
         let [s, e] = this.get_start_end();
 

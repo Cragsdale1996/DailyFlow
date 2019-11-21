@@ -1,15 +1,29 @@
 // ## WORK SESSIONS ## //
 
+/*
+work_session composition
+{
+    name:        string,
+    location:    string,
+    start:       date,
+    end:         date,
+    daily_event: {
+        title: string, 
+        start: date, 
+        end: date
+    }
+*/
+
 // ACTION TYPES
 export const ADD_WORK_SESSION    = 'ADD_WORK_SESSION';
 export const REMOVE_WORK_SESSION = 'REMOVE_WORK_SESSION';
 export const UPDATE_WORK_SESSION = 'UPDATE_WORK_SESSION';
 
 // ACTION CREATORS
-export function add_work_session(work_session){
+export function add_work_session(new_session){
     return { 
         type: ADD_WORK_SESSION, 
-        session 
+        new_session 
     }
 }
 
@@ -20,10 +34,10 @@ export function remove_work_session(index){
     }
 }
 
-export function update_work_session(index, new_vals){
+export function update_work_session(index, updated_session){
     return {
         type: UDPATE_WORK_SESSION, 
         index, 
-        new_vals 
+        updated_session
     }
 }
