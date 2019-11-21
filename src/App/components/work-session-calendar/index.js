@@ -75,7 +75,7 @@ export default class WorkSessionCalendar extends React.Component {
             const ws = sessions[i];
 
             events.push({
-                title:     ws.name,
+                title:     `${ws.name}, ${ws.location}`,
                 start:     ws.start,
                 end:       ws.end,
                 extendedProps: {
