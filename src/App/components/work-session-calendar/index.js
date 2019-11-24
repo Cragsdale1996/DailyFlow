@@ -17,16 +17,17 @@ class WorkSessionCalendar extends React.Component {
         this.state = {
             min_time:      "00:00:00",
             max_time:      "24:00:00",
-            slot_duration: "00:15:00",
+            scroll_time:   "05:30:00",
+            slot_duration: "00:30:00",
             height:        755,
             weekends:      true,
             now_indicator: true,
             column_header: false,
             all_day_slot:  false,
             header: {
-                left:   false,
+                left:   'title',
                 center: false,
-                right:  false
+                right:  'prev,next'
             }
         }
 
@@ -43,6 +44,7 @@ class WorkSessionCalendar extends React.Component {
 
               minTime      = {this.state.min_time}
               maxTime      = {this.state.max_time}
+              scrollTime   = {this.state.scroll_time}
               slotDuration = {this.state.slot_duration}
               height       = {this.state.height}
               allDaySlot   = {this.state.all_day_slot}
