@@ -1,18 +1,10 @@
 import React from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
 
 import WorkSessionCalendar from "../../components/work-session-calendar";
 import WorkSessionList from "../../components/work-session-list";
 import WorkSessionForm from "../../components/work-session-form";
 
 import "./index.css"
-
-import "@fullcalendar/core/main.css";
-import "@fullcalendar/daygrid/main.css";
-import "@fullcalendar/timegrid/main.css";
 
 export default class DailyView extends React.Component {
 
@@ -40,7 +32,7 @@ export default class DailyView extends React.Component {
             <div className="work-session-list">
               <div className="title-text">Today's Work Sessions</div>
               <div className="session-list">
-                <WorkSessionList sessions={this.state.work_sessions} />
+                <WorkSessionList/>
               </div>
             </div>
 
@@ -48,7 +40,7 @@ export default class DailyView extends React.Component {
             <div className="work-session-definition-form">
               <div className="title-text">Create a New Session</div>
               <div className="session-form">
-                <WorkSessionForm onSubmittal={this.add_work_session}/>
+                <WorkSessionForm/>
               </div>
             </div>
 
@@ -58,16 +50,4 @@ export default class DailyView extends React.Component {
       </div>
     );
   }
-
-  add_work_session = (session) => {
-    session.start = this.convert_to_date(session.start) 
-    session.end = this.convert_to_date(session.end)
-
-    this.setState(prevState => ( {work_sessions: [...prevState.work_sessions, session]} ) );
-  }
-
-  convert_to_date = (date_string) => {
-    return new Date(date_string);
-  }
-
 }

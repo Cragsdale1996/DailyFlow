@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { add_work_session } from "../../../Redux/actions";
 
-export default class WorkSessionForm extends React.Component {
+class WorkSessionForm extends React.Component {
 
     constructor(props){
         super(props);
@@ -37,7 +39,8 @@ export default class WorkSessionForm extends React.Component {
 
     handleSubmit = (event) => { 
         event.preventDefault();
-        this.props.onSubmittal(this.state);
+        //this.props.onSubmittal(this.state);
+        this.props.add_work_session(this.state);
 
         let [s, e] = this.get_start_end();
 
@@ -96,3 +99,13 @@ export default class WorkSessionForm extends React.Component {
     }
 
 }
+
+const map_state_to_props = () => null
+const map_dispatch_to_props = { add_work_session }
+
+WorkSessionForm = connect(
+    map_state_to_props,
+    map_dispatch_to_props
+)(WorkSessionForm);
+
+export default WorkSessionForm;

@@ -1,39 +1,33 @@
 import React from "react";
+import { connect } from "react-redux";
+import WorkSession from "../work-session";
 
 import "./index.css"
 
-export default class WorkSessionList extends React.Component {
+class WorkSessionList extends React.Component {
 
     render(){
         return(
             <div>
-                {[...this.render_sessions()]}
+                {this.props.work_sessions.map(session =>
+                    <WorkSession 
+                        key={session.id}
+                        {...session}
+                    />
+                )}
             </div>
         );
-    }
-
-    render_sessions = () => {
-
-        let rendered_sessions = []
-
-        for (let i = 0; i < this.props.sessions.length; i++){
-
-            const session = this.props.sessions[i];
-
-            rendered_sessions.push(
-                <div className="work-session">
-                    <div>Name: {session.name}</div>
-                    <div>Start: {this.render_date(session.start)}</div>
-                    <div>End: {this.render_date(session.end)}</div>
-                    <div>Location: {session.location}</div>
-                </div>
-            )
-        }
-
-        return rendered_sessions;
-    }
-
-    render_date = (date) => {
-        return `${date.getMonth()+1}/${date.getDate()}, ${date.getHours()}:${date.getSeconds()}`
-    }
+    }    
 }
+
+const map_state_to_props = (state) => { 
+    return {
+        work_sessions: state.work_sessions
+    }; 
+}
+
+WorkSessionList = connect(
+    map_state_to_props
+)(WorkSessionList);
+
+export default WorkSessionList;

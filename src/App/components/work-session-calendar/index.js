@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -9,7 +10,7 @@ import "@fullcalendar/core/main.css";
 import "@fullcalendar/daygrid/main.css";
 import "@fullcalendar/timegrid/main.css";
 
-export default class WorkSessionCalendar extends React.Component {
+class WorkSessionCalendar extends React.Component {
     constructor(props){
         super(props);
 
@@ -26,8 +27,7 @@ export default class WorkSessionCalendar extends React.Component {
                 left:   false,
                 center: false,
                 right:  false
-            },
-            events: this.create_events(props.sessions)
+            }
         }
 
         this.calendar_ref = React.createRef();
@@ -51,61 +51,35 @@ export default class WorkSessionCalendar extends React.Component {
               header       = {this.state.header}
               nowIndicator = {this.state.now_indicator}
 
-              events       = {this.state.events}
+              events       = {this.props.daily_events}
 
               windowResize = {this.adjust_size}
             />
         );
 
     }
-
-    componentDidUpdate(prevProps){
-        if(prevProps.sessions !== undefined && prevProps.sessions.length !== this.props.sessions.length){
-            this.setState({events: this.create_events(this.props.sessions)})
-        }
-    }
-
-    create_events = (sessions) => {
-
-        if (sessions == null) return [];
-        
-        let events = [];
-        for(let i = 0; i < sessions.length; i++){
-
-            const ws = sessions[i];
-
-            events.push({
-                title:     `${ws.name}, ${ws.location}`,
-                start:     ws.start,
-                end:       ws.end,
-                extendedProps: {
-                    location: ws.location
-                }
-            });
-        }
-
-        return events;
-
-    }
-
+    
     adjust_size = (view) => {
-
         let new_aspect_ratio = this.get_aspect_ratio();
         let calendar_api = this.calendar_ref.current.getApi();
 
         calendar_api.setOption("aspectRatio", new_aspect_ratio);
 
         calendar_api.render();
-
-        console.log(`Calendar's Ratio: ${calendar_api.getOption('aspectRatio')}`);
-        console.log(`What I generated: ${new_aspect_ratio}`);
-
     }
 
     get_aspect_ratio = () => {
-
         let target_width = window.screen.width * 0.1666;
         return target_width / window.innerHeight;
-
     }
 }
+
+const map_state_to_props = (state) => {
+    return { daily_events: state.work_sessions.map(session => session.daily_event) };
+}
+
+WorkSessionCalendar = connect(
+    map_state_to_props
+)(WorkSessionCalendar);
+
+export default WorkSessionCalendar;
