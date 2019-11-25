@@ -30,7 +30,7 @@ export default class DailyView extends React.Component {
 
             {/* Work Session List */}
             <div className="work-session-list">
-              <div className="title-text">Today's Work Sessions</div>
+              <h4>Today's Work Sessions</h4>
               <div className="session-list">
                 <WorkSessionList/>
               </div>
@@ -38,7 +38,7 @@ export default class DailyView extends React.Component {
 
             {/* Work Session Definition Form */}
             <div className="work-session-definition-form">
-              <div className="title-text">Create a New Session</div>
+              <h4>Create a New Session</h4>
               <div className="session-form">
                 <WorkSessionForm/>
               </div>

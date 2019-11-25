@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 
 import "./index.css";
 
-class WorkSessionDefiner extends React.Component{
+class Task extends React.Component{
     render(){
         return(
-            <div className="work-session-definer-container">
-                <h4>Work Sessions</h4>
+            <div className="task">
+                <h4>{this.props.title}</h4>
+                <p>{this.props.description}</p>
             </div>
         );
     }
@@ -21,9 +22,9 @@ const map_dispatch_to_props = () => {
     return null
 }
 
-WorkSessionDefiner = connect(
+Task = connect(
     map_state_to_props,
     map_dispatch_to_props
-)(WorkSessionDefiner);
+)(Task);
 
-export default WorkSessionDefiner;
+export default Task;
