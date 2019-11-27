@@ -1,92 +1,94 @@
 // ##### FETCH BOARDS ACTIONS #####
 
 // Request
-export const FETCH_BOARDS_REQUEST = 'FETCH_BOARDS_REQUEST';
+export const REQUEST_BOARDS = 'REQUEST_BOARDS';
 
-export function fetch_boards_request(){
+export function request_boards(){
     return {
-        type: 'FETCH_BOARDS_REQUEST'
+        type: 'REQUEST_BOARDS'
     }
 }
 
 // Success
-export const FETCH_BOARDS_SUCCESS = 'FETCH_BOARDS_SUCCESS';
+export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 
-export function fetch_boards_success(resp){
+export function receive_boards(boards){
     return {
-        type: 'FETCH_BOARDS_SUCCESS', 
-        response: resp
+        type: 'RECEIVE_BOARDS', 
+        boards
     }
 }
 
-// Failure
-export const FETCH_BOARDS_FAILURE = 'FETCH_BOARDS_FAILURE';
+// Error
+export const RECEIVE_BOARDS_ERROR = 'RECEIVE_BOARDS_ERROR';
 
-export function fetch_boards_failure(err){
+export function receive_boards_error(error){
     return {
-        type: 'FETCH_BOARDS_FAILURE',
-        error: err
+        type: 'RECEIVE_BOARDS_ERROR',
+        error
     }
 }
 
 // ##### FETCH LISTS ACTIONS #####
 
 // Request
-export const FETCH_LISTS_REQUEST = 'FETCH_LISTS_REQUEST';
+export const REQUEST_LISTS = 'REQUEST_LISTS';
 
-export function fetch_lists_request(){
+export function request_lists(board){
     return {
-        type: 'FETCH_LISTS_REQUEST'
+        type: 'REQUEST_LISTS',
+        board
     }
 }
 
 // Success
-export const FETCH_LISTS_SUCCESS = 'FETCH_LISTS_SUCCESS';
+export const RECEIVE_LISTS = 'RECEIVE_LISTS';
 
-export function fetch_lists_success(resp){
+export function receive_lists(lists){
     return {
-        type: 'FETCH_LISTS_SUCCESS', 
-        response: resp
+        type: 'RECEIVE_LISTS', 
+        lists
     }
 }
 
-// Failure
-export const FETCH_LISTS_FAILURE = 'FETCH_LISTS_FAILURE';
+// Error
+export const RECEIVE_LISTS_ERROR = 'RECEIVE_LISTS_ERROR';
 
-export function fetch_lists_failure(err){
+export function receive_lists_error(error){
     return {
-        type: 'FETCH_LISTS_FAILURE',
-        error: err
+        type: 'RECEIVE_LISTS_ERROR',
+        error
     }
 }
 
 // ##### FETCH CARDS ACTIONS #####
 
 // Request
-export const FETCH_CARDS_REQUEST = 'FETCH_CARDS_REQUEST';
+export const REQUEST_CARDS = 'REQUEST_CARDS';
 
-export function fetch_cards_request(){
+export function request_cards(board){
     return {
-        type: 'FETCH_CARDS_REQUEST'
+        type: 'REQUEST_CARDS',
+        board
     }
 }
 
 // Success
-export const FETCH_CARDS_SUCCESS = 'FETCH_CARDS_SUCCESS';
+export const RECEIVE_CARDS = 'RECEIVE_CARDS';
 
-export function fetch_cards_success(resp){
+export function receive_cards(cards){
     return {
-        type: 'FETCH_CARDS_SUCCESS', 
-        response: resp
+        type: 'RECEIVE_CARDS', 
+        cards
     }
 }
 
-// Failure
-export const FETCH_CARDS_FAILURE = 'FETCH_CARDS_FAILURE';
+// Error
+export const RECEIVE_CARDS_ERROR = 'RECEIVE_CARDS_ERROR';
 
-export function fetch_cards_failure(err){
+export function receive_cards_error(error){
     return {
-        type: 'FETCH_CARDS_FAILURE',
-        error: err
+        type: 'RECEIVE_CARDS_ERROR',
+        error
     }
 }
