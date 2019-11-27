@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import work_sessions from './work_sessions';
+//import trello_data from './trello_data';
 
 export default combineReducers({
     work_sessions
@@ -7,7 +8,7 @@ export default combineReducers({
 
 //const WorkFlowApp = combineReducers({
 //    work_sessions,
-//    daily_events
+//    trello_data
 //})
 //
 //const WorkFlowApp = (state = {}, action) => {
