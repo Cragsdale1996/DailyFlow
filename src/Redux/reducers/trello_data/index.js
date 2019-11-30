@@ -11,5 +11,3 @@ const TrelloData = combineReducers({
 });
 
 export default TrelloData;
-
-// Boards are fetched first. Then, Lists and Cards are fetched per board.

@@ -1,20 +1,35 @@
+import 'babel-polyfill';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';
 
 import $                  from 'jquery';
 import Popper             from 'popper.js';
+import * as serviceWorker from './serviceWorker';
+
+import { HashRouter }     from 'react-router-dom'
 import React              from 'react';
 import ReactDOM           from 'react-dom';
 import App                from './App';
-import * as serviceWorker from './serviceWorker';
-import appReducer         from './Redux/reducers';
-import { HashRouter }     from 'react-router-dom'
-import { Provider }       from 'react-redux';
-import { createStore }    from 'redux';
 
-const store = createStore(appReducer);
+import { createLogger }                 from 'redux-logger'
+import thunkMiddleware                  from 'redux-thunk'
+import { Provider }                     from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import appReducer                       from './Redux/reducers';
 
+// Redux Initialization
+const loggerMiddleware = createLogger();
+
+const store = createStore(
+    appReducer,
+    applyMiddleware(
+        thunkMiddleware,
+        loggerMiddleware
+    )
+);
+
+// Render App
 ReactDOM.render(
     <Provider store={store}>
         <HashRouter>
