@@ -5,8 +5,14 @@ import {
     REQUEST_CARDS,  RECEIVE_CARDS,  RECEIVE_CARDS_ERROR,
 } from '../actions/trello_data'; 
 
-// Boards are fetched first...
-// Then, Lists and Cards are fetched per board
+// Boards are fetched first. Then, Lists and Cards are fetched per board.
+
+// Board state diagram:
+// [id]: {
+//     id: #,
+//     name: '...',
+//     lists: []
+// }
 const boards = (
     state = {
         fetching: false,
@@ -19,9 +25,14 @@ const boards = (
 
 }
 
+// List state diagram:
+// [id]: {
+//     id: #,
+//     name: '...',
+//     cards: []
+// }
 const lists = (
     state = {
-        boards_fetching: [],
         items: {
 
         }
@@ -31,11 +42,18 @@ const lists = (
 
 }
 
+// Card state diagram:
+// [id]: {
+//     id: #,
+//     name: '...',
+//     description: '...',
+//     card: #id,
+//     list: #id
+// }
 const cards = (
     state = {
-        boards_fetching: [],
         items: {
-            
+
         }
     }, 
     action
