@@ -1,14 +1,28 @@
-import { RECEIVE_BOARDS } from '../../actions/trello_data'; 
+import { REQUEST_BOARDS, RECEIVE_BOARDS, RECEIVE_BOARDS_ERROR } from '../../actions/trello_data'; 
 
-// Board state diagram:
-// [id]: {
-//     id: #,
-//     name: '...',
-//     lists: []
+// Boards state diagram:
+
+// boards: {
+//     status: {
+//         pending: t/f,
+//         error: t/f
+//     },
+//     items: {
+//         [id]: {
+//             id: #,
+//             name: '...',
+//             lists: []
+//         }
+//         ...
+//     }
 // }
+
 const boards = (
     state = {
-        fetching: false, 
+        status: {
+            pending: false,
+            error: false
+        }, 
         items: {} 
     },
     action
@@ -16,24 +30,29 @@ const boards = (
     switch(action.type){
         case REQUEST_BOARDS:
             return {
-                fetching: true,
-                items: {
-                    ...items
+                ...state,
+                status: {
+                    ...state.status,
+                    pending: true
                 }
             }
         case RECEIVE_BOARDS:
             return {
-                fetching: false,
+                status: {
+                    pending: false,
+                    error: false
+                },
                 items: {
-                    ...items,
+                    ...state.items,
                     ...action.boards
                 }
             }
         case RECEIVE_BOARDS_ERROR:
             return {
-                fetching: false,
-                items: {
-                    ...items
+                ...state,
+                status: {
+                    pending: false,
+                    error: true
                 }
             }
         default:
