@@ -29,66 +29,70 @@ export function receive_boards_error(error){
     }
 }
 
-// ##### FETCH LISTS ACTIONS (Per Board) #####
+// ##### FETCH LISTS ACTIONS #####
 
-// Request
-export const REQUEST_LISTS = 'REQUEST_LISTS';
+// Request for All Boards
+export const REQUEST_ALL_LISTS = 'REQUEST_ALL_LISTS';
 
-export function request_lists(board){
+export function request_all_lists(boards){
     return {
-        type: 'REQUEST_LISTS',
-        board
+        type: 'REQUEST_ALL_LISTS',
+        boards
     }
 }
 
-// Success
+// Individual Success
 export const RECEIVE_LISTS = 'RECEIVE_LISTS';
 
-export function receive_lists(lists){
+export function receive_lists(lists, board){
     return {
         type: 'RECEIVE_LISTS', 
-        lists
-    }
-}
-
-// Error
-export const RECEIVE_LISTS_ERROR = 'RECEIVE_LISTS_ERROR';
-
-export function receive_lists_error(error){
-    return {
-        type: 'RECEIVE_LISTS_ERROR',
-        error
-    }
-}
-
-// ##### FETCH CARDS ACTIONS (Per Board) #####
-
-// Request
-export const REQUEST_CARDS = 'REQUEST_CARDS';
-
-export function request_cards(board){
-    return {
-        type: 'REQUEST_CARDS',
+        lists,
         board
     }
 }
 
-// Success
-export const RECEIVE_CARDS = 'RECEIVE_CARDS';
+// Individual Error
+export const RECEIVE_LISTS_ERROR = 'RECEIVE_LISTS_ERROR';
 
-export function receive_cards(cards){
+export function receive_lists_error(error, board){
     return {
-        type: 'RECEIVE_CARDS', 
-        cards
+        type: 'RECEIVE_LISTS_ERROR',
+        error,
+        board
     }
 }
 
-// Error
+// ##### FETCH CARDS ACTIONS #####
+
+// Request for All Cards
+export const REQUEST_ALL_CARDS = 'REQUEST_ALL_CARDS';
+
+export function request_all_cards(boards){
+    return {
+        type: 'REQUEST_ALL_CARDS',
+        boards
+    }
+}
+
+// Individual Success
+export const RECEIVE_CARDS = 'RECEIVE_CARDS';
+
+export function receive_cards(cards, board){
+    return {
+        type: 'RECEIVE_CARDS', 
+        cards,
+        board
+    }
+}
+
+// Individual Error
 export const RECEIVE_CARDS_ERROR = 'RECEIVE_CARDS_ERROR';
 
-export function receive_cards_error(error){
+export function receive_cards_error(error, board){
     return {
         type: 'RECEIVE_CARDS_ERROR',
-        error
+        error,
+        board
     }
 }
