@@ -44,7 +44,7 @@ const lists = (
                     boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board)
                 },
                 items:{
-                    ...items,
+                    ...state.items,
                     ...action.lists
                 }
             }
@@ -60,3 +60,5 @@ const lists = (
             return state;
     }
 }
+
+export default lists;

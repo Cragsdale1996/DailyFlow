@@ -12,10 +12,16 @@ export function request_boards(){
 // Success
 export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 
-export function receive_boards(boards){
+export function receive_boards(json){
+
+    console.log(json.data.children);
+
+    let boards_obj = {};
+    //json.data.children.forEach()
+
     return {
         type: 'RECEIVE_BOARDS', 
-        boards
+        boards: boards_obj
     }
 }
 
@@ -38,7 +44,7 @@ const base_url = process.env.REACT_APP_TRELLO_BASE_URL
 export function fetch_boards(){
 
     let boards_url = `${base_url}boards?fields=name,url&key=${key}&token=${token}`;
-
+    
     return function(dispatch){
 
         dispatch(request_boards());
@@ -46,11 +52,10 @@ export function fetch_boards(){
         return fetch(boards_url)
             .then(
                 response => response.json,
-                error    => dispatch(receive_boards_error(error))
+                error    => dispatch( receive_boards_error(error) )
             )
             .then(
-                json => dispatch()
+                json => dispatch( receive_boards(json) )
             )
-        
     }
 }

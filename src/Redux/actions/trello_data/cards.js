@@ -10,13 +10,28 @@ export function request_all_cards(boards){
     }
 }
 
+// Request Individual Board's Cards
+export const REQUEST_CARDS = 'REQUEST_CARDS';
+
+export function request_cards(board){
+    return {
+        type: 'REQUEST_CARDS',
+        board
+    }
+}
+
 // Individual Success
 export const RECEIVE_CARDS = 'RECEIVE_CARDS';
 
-export function receive_cards(cards, board){
+export function receive_cards(json, board){
+
+    console.log(json.data.children);
+
+    let cards_obj = {};
+
     return {
         type: 'RECEIVE_CARDS', 
-        cards,
+        cards: cards_obj,
         board
     }
 }
@@ -38,6 +53,23 @@ const key = process.env.REACT_APP_TRELLO_KEY;
 const token = process.env.REACT_APP_TRELLO_TOKEN;
 const base_url = process.env.REACT_APP_TRELLO_BASE_URL;
 
-export function fetch_card(board){
+export function fetch_cards(board){
+
+    let cards_url = `${base_url}boards/${board}/fields=name,url&key=${key}&token=${token}`;
+
+    return function(dispatch){
+
+        dispatch(request_cards(board));
+
+        return fetch(cards_url)
+            .then(
+                response => response.json,
+                error    => dispatch(receive_cards_error(error))
+            )
+            .then(
+                json => dispatch(receive_cards(json, board))
+            )
+        
+    }
 
 }

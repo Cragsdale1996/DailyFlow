@@ -1,4 +1,4 @@
-import { REQUEST_CARDS,  RECEIVE_CARDS,  RECEIVE_CARDS_ERROR } from '../../actions/trello_data'; 
+import { REQUEST_ALL_CARDS, REQUEST_CARDS,  RECEIVE_CARDS,  RECEIVE_CARDS_ERROR } from '../../actions/trello_data'; 
 
 // Cards state diagram:
 
@@ -45,7 +45,7 @@ const cards = (
                     boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board)
                 },
                 items:{
-                    ...items,
+                    ...state.items,
                     ...action.cards
                 }
             }
@@ -61,3 +61,5 @@ const cards = (
             return state;
     }
 }
+
+export default cards;

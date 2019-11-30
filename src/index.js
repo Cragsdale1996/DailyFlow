@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+//import 'babel-polyfill';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css';
@@ -12,11 +12,13 @@ import React              from 'react';
 import ReactDOM           from 'react-dom';
 import App                from './App';
 
-import { createLogger }                 from 'redux-logger'
-import thunkMiddleware                  from 'redux-thunk'
-import { Provider }                     from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import { createLogger }                 from 'redux-logger'
+import { Provider }                     from 'react-redux';
+import thunkMiddleware                  from 'redux-thunk'
 import appReducer                       from './Redux/reducers';
+
+import { fetch_boards }                 from './Redux/actions/trello_data';
 
 // Redux Initialization
 const loggerMiddleware = createLogger();
@@ -28,6 +30,9 @@ const store = createStore(
         loggerMiddleware
     )
 );
+
+store
+    .dispatch(fetch_boards())
 
 // Render App
 ReactDOM.render(

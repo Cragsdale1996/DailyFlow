@@ -59,3 +59,5 @@ const boards = (
             return state;
     }       
 }
+
+export default boards;
