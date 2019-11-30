@@ -5,14 +5,40 @@ import {
     REQUEST_CARDS,  RECEIVE_CARDS,  RECEIVE_CARDS_ERROR,
 } from '../actions/trello_data'; 
 
-const boards = (state = {}, action) => {
-    
+// Boards are fetched first...
+// Then, Lists and Cards are fetched per board
+const boards = (
+    state = {
+        fetching: false,
+        items: {
+
+        }
+    }, 
+    action
+) => {
+
 }
 
-const lists = (state = {}, action) => {
+const lists = (
+    state = {
+        boards_fetching: [],
+        items: {
+
+        }
+    }, 
+    action
+) => {
 
 }
 
-const cards = (state = {}, action) => {
+const cards = (
+    state = {
+        boards_fetching: [],
+        items: {
+            
+        }
+    }, 
+    action
+) => {
 
 }

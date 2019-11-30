@@ -29,7 +29,7 @@ export function receive_boards_error(error){
     }
 }
 
-// ##### FETCH LISTS ACTIONS #####
+// ##### FETCH LISTS ACTIONS (Per Board) #####
 
 // Request
 export const REQUEST_LISTS = 'REQUEST_LISTS';
@@ -61,7 +61,7 @@ export function receive_lists_error(error){
     }
 }
 
-// ##### FETCH CARDS ACTIONS #####
+// ##### FETCH CARDS ACTIONS (Per Board) #####
 
 // Request
 export const REQUEST_CARDS = 'REQUEST_CARDS';
