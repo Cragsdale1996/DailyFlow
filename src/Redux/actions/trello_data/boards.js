@@ -14,7 +14,7 @@ export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 
 export function receive_boards(json){
 
-    console.log(json.data.children);
+    console.log(json.data);
 
     let boards_obj = {};
     //json.data.children.forEach()
@@ -44,6 +44,8 @@ const base_url = process.env.REACT_APP_TRELLO_BASE_URL
 export function fetch_boards(){
 
     let boards_url = `${base_url}boards?fields=name,url&key=${key}&token=${token}`;
+
+    console.log(boards_url);
     
     return function(dispatch){
 

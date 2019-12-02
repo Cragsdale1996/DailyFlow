@@ -32,8 +32,7 @@ const store = createStore(
     )
 );
 
-store
-    .dispatch(fetch_boards())
+store.dispatch(fetch_boards())
 
 // Render App
 ReactDOM.render(
