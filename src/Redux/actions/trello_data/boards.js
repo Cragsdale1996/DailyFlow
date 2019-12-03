@@ -14,10 +14,16 @@ export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 
 export function receive_boards(json){
 
-    console.log(json.data);
+    console.log(json);
 
     let boards_obj = {};
-    //json.data.children.forEach()
+    
+    json.forEach(board => {
+        boards_obj[board.id] = {
+            id: board.id,
+            name: board.name
+        }
+    })
 
     return {
         type: 'RECEIVE_BOARDS', 
@@ -39,13 +45,11 @@ export function receive_boards_error(error){
 
 const key = process.env.REACT_APP_TRELLO_KEY;
 const token = process.env.REACT_APP_TRELLO_TOKEN;
-const base_url = process.env.REACT_APP_TRELLO_BASE_URL
+const base_url = process.env.REACT_APP_TRELLO_BASE_URL;
 
 export function fetch_boards(){
 
-    let boards_url = `${base_url}boards?fields=name,url&key=${key}&token=${token}`;
-
-    console.log(boards_url);
+    const boards_url = `${base_url}boards?fields=name,url&key=${key}&token=${token}`;
     
     return function(dispatch){
 
@@ -53,7 +57,7 @@ export function fetch_boards(){
 
         return fetch(boards_url)
             .then(
-                response => response.json,
+                response => response.json(),
                 error    => dispatch( receive_boards_error(error) )
             )
             .then(

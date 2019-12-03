@@ -30,7 +30,7 @@ const cards = (
     action
 ) => {
     switch(action.type){
-        case REQUEST_ALL_CARDS:
+        case REQUEST_CARDS:
             return {
                 ...state,
                 per_board_status: {
@@ -42,7 +42,7 @@ const cards = (
             return {
                 per_board_status:{
                     ...state.per_board_status,
-                    boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board)
+                    boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board_id)
                 },
                 items:{
                     ...state.items,
@@ -53,8 +53,8 @@ const cards = (
             return {
                 ...state,
                 per_board_status: {
-                    boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board),
-                    boards_errors: state.per_board_status.boards_errors.concat(action.board)
+                    boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board_id),
+                    boards_errors: state.per_board_status.boards_errors.concat(action.board_id)
                 }
             }
         default:

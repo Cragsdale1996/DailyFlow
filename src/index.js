@@ -19,7 +19,7 @@ import { Provider }                     from 'react-redux';
 import thunkMiddleware                  from 'redux-thunk'
 import appReducer                       from './Redux/reducers';
 
-import { fetch_boards }                 from './Redux/actions/trello_data';
+import { fetch_trello_data }            from './Redux/actions/trello_data';
 
 // Redux Initialization
 const loggerMiddleware = createLogger();
@@ -32,7 +32,8 @@ const store = createStore(
     )
 );
 
-store.dispatch(fetch_boards())
+store
+    .dispatch(fetch_trello_data())
 
 // Render App
 ReactDOM.render(
