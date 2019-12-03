@@ -1,40 +1,5 @@
 import fetch from 'cross-fetch';
 
-const key = process.env.REACT_APP_TRELLO_KEY;
-const token = process.env.REACT_APP_TRELLO_TOKEN;
-const base_url = process.env.REACT_APP_TRELLO_BASE_URL;
-
-// API call thunks
-
-export function fetch_all_cards(boards_ids){
-    return function(dispatch){
-        boards_ids.forEach(board_id => {
-            dispatch(fetch_cards(board_id))
-        });
-    }
-}
-
-export function fetch_cards(board_id){
-
-    let cards_url = `${base_url}boards/${board_id}/fields=name,url&key=${key}&token=${token}`;
-
-    return function(dispatch){
-
-        dispatch(request_cards(board_id));
-
-        return fetch(cards_url)
-            .then(
-                response => response.json(),
-                error    => dispatch(receive_cards_error(error))
-            )
-            .then(
-                json => dispatch(receive_cards(json, board_id))
-            )
-        
-    }
-
-}
-
 // Request for All Cards (REMOVE THIS... DOESN'T MAKE SENSE TO HAVE ACTION FOR THIS)
 export const REQUEST_ALL_CARDS = 'REQUEST_ALL_CARDS';
 

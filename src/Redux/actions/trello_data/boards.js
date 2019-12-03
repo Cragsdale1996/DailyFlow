@@ -8,7 +8,7 @@ const base_url = process.env.REACT_APP_TRELLO_BASE_URL;
 
 export function fetch_boards(){
 
-    const boards_url = `${base_url}boards?fields=name,url&key=${key}&token=${token}`;
+    const boards_url = `${base_url}member/me/boards?fields=name,url&key=${key}&token=${token}`;
     
     return function(dispatch){
 
