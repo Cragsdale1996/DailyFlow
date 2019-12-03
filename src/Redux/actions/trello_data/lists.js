@@ -24,7 +24,7 @@ export function fetch_lists(board_id){
 
         return fetch(lists_url)
             .then(
-                response => response.json,
+                response => response.json(),
                 error    => dispatch( receive_lists_error(error) )
             )
             .then(

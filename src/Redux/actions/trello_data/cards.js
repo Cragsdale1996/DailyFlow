@@ -24,7 +24,7 @@ export function fetch_cards(board_id){
 
         return fetch(cards_url)
             .then(
-                response => response.json,
+                response => response.json(),
                 error    => dispatch(receive_cards_error(error))
             )
             .then(
