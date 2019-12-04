@@ -12,12 +12,25 @@ import { RECEIVE_CHILDREN } from '../../actions/trello_data';
 //     ...   
 // }
 
+const build_lists = (json) => {
+    let lists_obj = {}
+
+    json.forEach(card => {
+        lists_obj[json.id] = {
+            id: json.id,
+            name: json.name
+        }
+    })
+
+    return lists_obj;
+}
+
 const lists = (state = {}, action) => {
     switch(action.type){
         case RECEIVE_LISTS:
             return {
                 ...state,
-                ...action.lists
+                ...build_lists(action.lists_json)
             }
         default:
             return state;

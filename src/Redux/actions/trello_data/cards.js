@@ -1,15 +1,5 @@
 import fetch from 'cross-fetch';
 
-// Request for All Cards (REMOVE THIS... DOESN'T MAKE SENSE TO HAVE ACTION FOR THIS)
-export const REQUEST_ALL_CARDS = 'REQUEST_ALL_CARDS';
-
-export function request_all_cards(boards){
-    return {
-        type: 'REQUEST_ALL_CARDS',
-        boards
-    }
-}
-
 // Request Individual Board's Cards
 export const REQUEST_CARDS = 'REQUEST_CARDS';
 
@@ -24,14 +14,9 @@ export function request_cards(board_id){
 export const RECEIVE_CARDS = 'RECEIVE_CARDS';
 
 export function receive_cards(json, board_id){
-
-    console.log(json);
-
-    let cards_obj = {};
-
     return {
         type: 'RECEIVE_CARDS', 
-        cards: cards_obj,
+        cards_json: json,
         board_id
     }
 }

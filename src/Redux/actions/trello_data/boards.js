@@ -38,21 +38,9 @@ export function request_boards(){
 export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 
 export function receive_boards(json){
-
-    console.log(json);
-
-    let boards_obj = {};
-    
-    json.forEach(board => {
-        boards_obj[board.id] = {
-            id: board.id,
-            name: board.name
-        }
-    })
-
     return {
         type: 'RECEIVE_BOARDS', 
-        boards: boards_obj
+        boards_json: json
     }
 }
 
