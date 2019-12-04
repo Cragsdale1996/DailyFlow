@@ -1,61 +1,24 @@
-import { REQUEST_ALL_CARDS, REQUEST_CARDS,  RECEIVE_CARDS,  RECEIVE_CARDS_ERROR } from '../../actions/trello_data'; 
+import { RECEIVE_CHILDREN } from '../../actions/trello_data'; 
 
 // Cards state diagram:
 
 // cards: {
-//     per_board_status: {
-//         boards_pending: [],
-//         boards_error: []
-//     },
-//     items: {
-//         [id]: {
-//             id: #,
-//             name: '...',
-//             description: '...',
-//             board: #id,
-//             list: #id
-//         },
-//         ...   
-//     }
+//    [id]: {
+//        id: #,
+//        name: '...',
+//        description: '...',
+//        board: #id,
+//        list: #id
+//    },
+//    ...   
 // }
 
-const cards = (
-    state = { 
-        per_board_status: {
-            boards_pending: [],
-            boards_error: []
-        },
-        items: {}
-    }, 
-    action
-) => {
+const cards = (state = {}, action) => {
     switch(action.type){
-        case REQUEST_CARDS:
-            return {
-                ...state,
-                per_board_status: {
-                    ...state.per_board_status,
-                    boards_pending: action.boards
-                }
-            }
         case RECEIVE_CARDS:
             return {
-                per_board_status:{
-                    ...state.per_board_status,
-                    boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board_id)
-                },
-                items:{
-                    ...state.items,
-                    ...action.cards
-                }
-            }
-        case RECEIVE_CARDS_ERROR:
-            return {
                 ...state,
-                per_board_status: {
-                    boards_pending: state.per_board_status.boards_pending.filter(item => item !== action.board_id),
-                    boards_errors: state.per_board_status.boards_errors.concat(action.board_id)
-                }
+                ...action.cards
             }
         default:
             return state;

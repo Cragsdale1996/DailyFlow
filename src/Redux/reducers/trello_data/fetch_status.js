@@ -11,15 +11,14 @@ import {
 //     boards_children_errors: []
 // }
 
-const fetch_status = (
-    state = {
-        boards_pending: false,
-        boards_error: false,
-        boards_children_pending: [],
-        boards_children_errors: []
-    },
-    action
-) => {
+const initial_state = {
+    boards_pending: false,
+    boards_error: false,
+    boards_children_pending: [],
+    boards_children_errors: []
+}
+
+const fetch_status = (state = initial_state, action) => {
     switch(action.type){
         case REQUEST_BOARDS:
             return {
@@ -41,6 +40,7 @@ const fetch_status = (
         case REQUEST_CHILDREN:
             return {
                 ...state,
+                boards_children_errors:  state.boards_children_errors.filter(id => id !== action.board_id),
                 boards_children_pending: state.boards_children_pending.concat(action.board_id)
             }
         case RECEIVE_CHILDREN:
@@ -51,7 +51,8 @@ const fetch_status = (
         case RECEIVE_CHILDREN_ERROR:
             return {
                 ...state,
-                boards_children_error: state.boards_children_error.concat(action.board_id)
+                boards_children_errors:  state.boards_children_errors.concat(action.board_id),
+                boards_children_pending: state.boards_children_pending.filter(id => id !== action.board_id)
             }
     }
 }
