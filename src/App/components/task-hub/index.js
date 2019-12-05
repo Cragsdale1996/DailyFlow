@@ -5,22 +5,14 @@ import Task from "../task";
 import "./index.css";
 
 class TaskHub extends React.Component{
-
-    state = {
-        tasks: [
-            {id: 1, title: "Learn Song", description: "It's about time you learned that song"},
-            {id: 2, title: "Complete CPM", description: "Seriously, dude"}
-        ]
-    }
-
     render(){
         return(
             <div className="task-hub-container">
                 <h4>Tasks</h4>
-                {this.state.tasks.map(task => 
+                {Object.keys(this.props.tasks).map(task_id => 
                     <Task
-                        key={task.id}
-                        {...task}
+                        key={task_id}
+                        {...this.props.tasks[task_id]}
                     />
                 )}
             </div>
@@ -29,8 +21,10 @@ class TaskHub extends React.Component{
 
 }
 
-const map_state_to_props = () => {
-    return null;
+const map_state_to_props = (state) => {
+    return {
+        tasks: state.trello_data.cards
+    }
 }
 
 const map_dispatch_to_props = () => {
