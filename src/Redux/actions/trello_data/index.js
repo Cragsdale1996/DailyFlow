@@ -15,11 +15,14 @@ export function fetch_trello_data(){
         // First, fetch boards
         dispatch(fetch_boards())
         .then(() => {
-            // When boards data present, fetch lists and cards in parallel
-            const boards = getState().trello_data.boards.items;
-            const boards_ids = Object.keys(boards);
 
-            dispatch(fetch_all_boards_children(boards_ids));
+            const boards = getState().trello_data.boards;
+
+            if(boards){
+                const boards_ids = Object.keys(boards);
+                dispatch(fetch_all_boards_children(boards_ids));
+            }
+
         })
     }
 }
@@ -60,10 +63,10 @@ export function request_children(board_id){
 
 export const RECEIVE_CHILDREN = 'RECEIVE_CHILDREN';
 
-export function receive_children(cards_and_lists, board_id){
+export function receive_children(json, board_id){
     return {
         type: 'RECEIVE_CHILDREN',
-        cards_and_lists,
+        json,
         board_id
     }
 }

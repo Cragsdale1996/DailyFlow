@@ -12,12 +12,15 @@ import { RECEIVE_BOARDS } from '../../actions/trello_data';
 // }
 
 const build_boards = (json) => {
+
+    console.log(json)
+
     let boards_obj = {}
 
     json.forEach(board => {
-        boards_obj[json.id] = {
-            id: json.id,
-            name: json.name
+        boards_obj[board.id] = {
+            id: board.id,
+            name: board.name
         }
     })
 
@@ -29,7 +32,7 @@ const boards = (state = {}, action) => {
         case RECEIVE_BOARDS:
             return {
                 ...state,
-                ...build_boards(action.boards_json)
+                ...build_boards(action.json)
             }
         default:
             return state;

@@ -54,6 +54,8 @@ const fetch_status = (state = initial_state, action) => {
                 boards_children_errors:  state.boards_children_errors.concat(action.board_id),
                 boards_children_pending: state.boards_children_pending.filter(id => id !== action.board_id)
             }
+        default:
+            return state;
     }
 }
 
