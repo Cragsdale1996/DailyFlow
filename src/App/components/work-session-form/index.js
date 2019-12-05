@@ -39,11 +39,8 @@ class WorkSessionForm extends React.Component {
 
     handleSubmit = (event) => { 
         event.preventDefault();
-        //this.props.onSubmittal(this.state);
         this.props.add_work_session(this.state);
-
         let [s, e] = this.get_start_end();
-
         this.setState({
             name:     '',
             start:    s,

@@ -9,10 +9,10 @@ class WorkSessionList extends React.Component {
     render(){
         return(
             <div>
-                {this.props.work_sessions.map(session =>
+                {Object.keys(this.props.work_sessions.items).map(session_id =>
                     <WorkSession 
-                        key={session.id}
-                        {...session}
+                        key={session_id}
+                        {...this.props.work_sessions.items[session_id]}
                     />
                 )}
             </div>
