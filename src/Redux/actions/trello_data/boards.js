@@ -40,7 +40,7 @@ export const RECEIVE_BOARDS = 'RECEIVE_BOARDS';
 export function receive_boards(json){
     return {
         type: 'RECEIVE_BOARDS', 
-        boards_json: json
+        json
     }
 }
 

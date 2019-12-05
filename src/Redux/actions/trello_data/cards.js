@@ -16,7 +16,7 @@ export const RECEIVE_CARDS = 'RECEIVE_CARDS';
 export function receive_cards(json, board_id){
     return {
         type: 'RECEIVE_CARDS', 
-        cards_json: json,
+        json,
         board_id
     }
 }

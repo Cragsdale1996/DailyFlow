@@ -27,10 +27,10 @@ const build_lists = (json) => {
 
 const lists = (state = {}, action) => {
     switch(action.type){
-        case RECEIVE_LISTS:
+        case RECEIVE_CHILDREN:
             return {
                 ...state,
-                ...build_lists(action.lists_json)
+                ...build_lists(action.json)
             }
         default:
             return state;

@@ -56,3 +56,5 @@ const fetch_status = (state = initial_state, action) => {
             }
     }
 }
+
+export default fetch_status;

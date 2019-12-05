@@ -28,10 +28,10 @@ const build_cards = (json) => {
 
 const cards = (state = {}, action) => {
     switch(action.type){
-        case RECEIVE_CARDS:
+        case RECEIVE_CHILDREN:
             return {
                 ...state,
-                ...build_cards(action.cards_json)
+                ...build_cards(action.json)
             }
         default:
             return state;
