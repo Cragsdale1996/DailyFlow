@@ -15,11 +15,11 @@ class Task extends React.Component{
 }
 
 const map_state_to_props = () => {
-    return null;
+    return {};
 }
 
 const map_dispatch_to_props = () => {
-    return null
+    return {};
 }
 
 Task = connect(

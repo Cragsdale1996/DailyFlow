@@ -91,7 +91,7 @@ const build_work_session = (session, id) => {
 }
 
 const remove_property = (obj, property) => {
-    return  Object.keys(obj).reduce((acc, key) => {
+    return Object.keys(obj).reduce((acc, key) => {
       if (key !== property) {
         return {...acc, [key]: obj[key]}
       }
@@ -102,10 +102,6 @@ const remove_property = (obj, property) => {
 const work_sessions = (state = initial_state, action) => {
     switch (action.type) {
         case ADD_WORK_SESSION:
-            //return [
-            //    ...state,
-            //    build_work_session(action.new_session, action.id)
-            //]
             return {
                 ...state,
                 items: {
@@ -114,17 +110,11 @@ const work_sessions = (state = initial_state, action) => {
                 }
             };
         case REMOVE_WORK_SESSION:
-            //return state.filter(session => session.id !== action.id) 
             return {
                 ...state,
                 items: remove_property(state.items, action.id)
             }
         case UPDATE_WORK_SESSION:
-            //return state.map(session => {
-            //    if (session.id !== action.id) return session;
-            //    return build_work_session(action.updated_section, action.id);
-            //});
-
             const updated_items = Object.keys(state.items).map(id => {
                 if (id !== action.id) return state.items[id];
                 return build_work_session(action.updated_section, action.id);

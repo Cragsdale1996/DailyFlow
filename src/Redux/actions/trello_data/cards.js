@@ -1,5 +1,3 @@
-import fetch from 'cross-fetch';
-
 // Request Individual Board's Cards
 export const REQUEST_CARDS = 'REQUEST_CARDS';
 

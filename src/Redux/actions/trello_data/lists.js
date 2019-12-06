@@ -1,5 +1,3 @@
-import fetch from 'cross-fetch';
-
 // Request for Individual Board's Lists
 export const REQUEST_LISTS = 'REQUEST_LISTS';
 

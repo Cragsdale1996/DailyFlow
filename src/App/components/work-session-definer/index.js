@@ -27,7 +27,7 @@ const map_state_to_props = (state) => {
 }
 
 const map_dispatch_to_props = () => {
-    return null
+    return {};
 }
 
 WorkSessionDefiner = connect(

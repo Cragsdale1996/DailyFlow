@@ -97,7 +97,9 @@ class WorkSessionForm extends React.Component {
 
 }
 
-const map_state_to_props = () => null
+const map_state_to_props = () => { 
+    return {}; 
+};
 const map_dispatch_to_props = { add_work_session }
 
 WorkSessionForm = connect(
