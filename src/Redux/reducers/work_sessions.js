@@ -33,6 +33,11 @@ import {
 
 const initial_state = {
     categories: {
+        0: {
+            id: 0,
+            name: "N/A",
+            color: "brown"
+        },
         1: {
             id: 1,
             name: "Productivity",
@@ -41,7 +46,7 @@ const initial_state = {
         2: {
             id: 2,
             name: "Relationships",
-            color: "lightblue"
+            color: "lightskyblue"
         },
         3: {
             id: 3,
@@ -61,7 +66,7 @@ const initial_state = {
         6: {
             id: 6,
             name: "Career / Profession",
-            color: "darkblue"
+            color: "navy"
         },
     },
     items: {}
@@ -83,7 +88,8 @@ const build_work_session = (session, id) => {
         daily_event: {
             title: `${session.name}, ${session.location}`,
             start: start_date,
-            end:   end_date
+            end:   end_date,
+            color: initial_state.categories[session.category].color
         }
     }    
 

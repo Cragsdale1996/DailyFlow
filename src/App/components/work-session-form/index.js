@@ -11,7 +11,8 @@ class WorkSessionForm extends React.Component {
             name: '',
             start: s,
             end: e,
-            location: ''
+            location: '',
+            category: 0
             //billing: {
             //    is_billable: false,
             //    hourly_rate: 0,
@@ -36,6 +37,7 @@ class WorkSessionForm extends React.Component {
     handleStartChange    = (event) => { this.setState({ start:    event.target.value }); }
     handleEndChange      = (event) => { this.setState({ end:      event.target.value }); }
     handleLocationChange = (event) => { this.setState({ location: event.target.value }); }
+    handleSelectChange   = (event) => { this.setState({ category: event.target.value }); }
 
     handleSubmit = (event) => { 
         event.preventDefault();
@@ -45,7 +47,8 @@ class WorkSessionForm extends React.Component {
             name:     '',
             start:    s,
             end:      e,
-            location: ''
+            location: '',
+            category: 0
         })
     }
 
@@ -89,6 +92,16 @@ class WorkSessionForm extends React.Component {
                     />
                 </label>
                 <br/>
+                <label>
+                    Category:
+                    <select value={this.state.category} onChange={this.handleSelectChange}>
+                        {Object.keys(this.props.categories).map(category_id => 
+                            <option value={category_id} key={category_id}>
+                                {this.props.categories[category_id].name}
+                            </option>
+                        )}
+                    </select>
+                </label>
                 <input type="submit" value="Submit" />
             </form>
         );
@@ -97,8 +110,8 @@ class WorkSessionForm extends React.Component {
 
 }
 
-const map_state_to_props = () => { 
-    return {}; 
+const map_state_to_props = (state) => { 
+    return { categories: state.work_sessions.categories }; 
 };
 const map_dispatch_to_props = { add_work_session }
 

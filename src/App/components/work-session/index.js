@@ -9,9 +9,9 @@ class WorkSession extends React.Component {
         return (
             <div className="work-session">
                 <div>Name: {this.props.name}</div>
-                <div>Start: {this.render_date(this.props.start)}</div>
-                <div>End: {this.render_date(this.props.end)}</div>
+                <div>Time: {this.render_date(this.props.start)} - {this.render_date(this.props.end)}</div>
                 <div>Location: {this.props.location}</div>
+                <div>Category: {this.props.categories[this.props.category].name}</div>
                 <button onClick={() => this.props.remove_work_session(this.props.id)}>Remove</button>
             </div>
         );
@@ -23,10 +23,16 @@ class WorkSession extends React.Component {
 
 }
 
+const map_state_to_props = (state) => {
+    return {
+        categories: state.work_sessions.categories
+    };
+}
+
 const map_dispatch_to_props = { remove_work_session };
 
 WorkSession = connect(
-    null,
+    map_state_to_props,
     map_dispatch_to_props
 )(WorkSession);
 

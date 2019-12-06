@@ -1,22 +1,5 @@
 // ## WORK SESSIONS ## //
 
-/*
-work_session composition
-{
-    id:          int,
-    name:        string,
-    location:    string,
-    start:       date,
-    end:         date,
-    daily_event: {
-        title: string, 
-        start: date, 
-        end: date
-    }
-*/
-
-// ##### WORK SESSION ACTIONS #####
-
 let nextWorkSessionId = 0;
 
 // ADD

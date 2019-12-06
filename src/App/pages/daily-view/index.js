@@ -8,14 +8,6 @@ import "./index.css"
 
 export default class DailyView extends React.Component {
 
-  constructor(props){
-    super(props);
-
-    this.state = {
-      work_sessions: []
-    };
-  }
-
   render() {
     return (
       <div className="daily-view">
@@ -23,7 +15,7 @@ export default class DailyView extends React.Component {
 
           {/* Work Session Calendar */}
           <div className="col-md-6 daily-view-calendar">
-            <WorkSessionCalendar sessions={this.state.work_sessions}/>
+            <WorkSessionCalendar/>
           </div>
 
           <div className="col-md-6">
