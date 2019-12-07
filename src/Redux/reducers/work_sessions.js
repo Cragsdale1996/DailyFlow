@@ -97,6 +97,8 @@ const build_work_session = (session, id) => {
 }
 
 const remove_property = (obj, property) => {
+    console.log(obj[property]);
+
     return Object.keys(obj).reduce((acc, key) => {
       if (key !== property) {
         return {...acc, [key]: obj[key]}
@@ -116,16 +118,19 @@ const work_sessions = (state = initial_state, action) => {
                 }
             };
         case REMOVE_WORK_SESSION:
+            const new_items = Object.keys(state.items).reduce((acc, key) => {
+                if (key !== action.id.toString()) return {...acc, [key]: state.items[key]}
+                return acc;
+            }, {})
             return {
                 ...state,
-                items: remove_property(state.items, action.id)
+                items: new_items
             }
         case UPDATE_WORK_SESSION:
             const updated_items = Object.keys(state.items).map(id => {
                 if (id !== action.id) return state.items[id];
                 return build_work_session(action.updated_section, action.id);
             })
-
             return {
                 ...state,
                 items: {...updated_items}
