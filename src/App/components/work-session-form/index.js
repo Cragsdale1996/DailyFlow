@@ -33,13 +33,13 @@ class WorkSessionForm extends React.Component {
         return [s, e];
     }
 
-    handleNameChange     = (event) => { this.setState({ name:     event.target.value }); }
-    handleStartChange    = (event) => { this.setState({ start:    event.target.value }); }
-    handleEndChange      = (event) => { this.setState({ end:      event.target.value }); }
-    handleLocationChange = (event) => { this.setState({ location: event.target.value }); }
-    handleSelectChange   = (event) => { this.setState({ category: event.target.value }); }
+    handle_name_change     = (event) => this.setState({ name:     event.target.value })
+    handle_start_change    = (event) => this.setState({ start:    event.target.value })
+    handle_end_change      = (event) => this.setState({ end:      event.target.value })
+    handle_location_change = (event) => this.setState({ location: event.target.value })
+    handle_select_change   = (event) => this.setState({ category: event.target.value })
 
-    handleSubmit = (event) => { 
+    handle_submit = (event) => { 
         event.preventDefault();
         this.props.add_work_session(this.state);
         let [s, e] = this.get_start_end();
@@ -55,13 +55,13 @@ class WorkSessionForm extends React.Component {
     render(){
 
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handle_submit}>
                 <label>
                     Name:
                     <input 
                         type="text"
                         value={this.state.name}
-                        onChange={this.handleNameChange}
+                        onChange={this.handle_name_change}
                     />
                 </label>
                 <br/>
@@ -70,7 +70,7 @@ class WorkSessionForm extends React.Component {
                     <input 
                         type="datetime-local"
                         value={this.state.start}
-                        onChange={this.handleStartChange}
+                        onChange={this.handle_start_change}
                     />
                 </label>
                 <br/>
@@ -79,7 +79,7 @@ class WorkSessionForm extends React.Component {
                     <input 
                         type="datetime-local"
                         value={this.state.end}
-                        onChange={this.handleEndChange}
+                        onChange={this.handle_end_change}
                     />
                 </label>
                 <br/>
@@ -88,13 +88,13 @@ class WorkSessionForm extends React.Component {
                     <input 
                         type="text"
                         value={this.state.location}
-                        onChange={this.handleLocationChange}
+                        onChange={this.handle_location_change}
                     />
                 </label>
                 <br/>
                 <label>
                     Category:
-                    <select value={this.state.category} onChange={this.handleSelectChange}>
+                    <select value={this.state.category} onChange={this.handle_select_change}>
                         {Object.keys(this.props.categories).map(category_id => 
                             <option value={category_id} key={category_id}>
                                 {this.props.categories[category_id].name}

@@ -12,35 +12,41 @@ const base_url = process.env.REACT_APP_TRELLO_BASE_URL;
 
 export function fetch_trello_data(){
     return function(dispatch, getState){
+
         // First, fetch boards
         dispatch(fetch_boards())
         .then(() => {
 
-            const boards = getState().trello_data.boards;
+            // Then, fetch each boards' children (cards and lists)
+            const board_ids = Object.keys(getState().trello_data.boards);
+            Promise.all( dispatch(fetch_all_boards_children(board_ids)) )
+            .then(() => {
 
-            if(boards){
-                const boards_ids = Object.keys(boards);
-                dispatch(fetch_all_boards_children(boards_ids));
-            }
+                // Finally, populate boards with references to children
+                dispatch(link_all_children());
+
+            }) 
 
         })
+
     }
 }
 
 export function fetch_all_boards_children(boards_ids){
     return function(dispatch){
-        boards_ids.forEach(board_id => {
-            dispatch(fetch_board_children(board_id))
-        });
+
+        return boards_ids
+            .map(board_id => dispatch(fetch_board_children(board_id)));
+
     }
 }
 
 export function fetch_board_children(board_id){
-
-    let children_url = `${base_url}boards/${board_id}/lists?fields=name,id&cards=open&card_fields=id,name,desc&key=${key}&token=${token}`;
-    
     return function(dispatch){
+
         dispatch(request_children(board_id))
+        const children_url = `${base_url}boards/${board_id}/lists?fields=name,id&cards=open&card_fields=id,name,desc&key=${key}&token=${token}`;
+
         return fetch(children_url)
             .then(
                 response => response.json(),
@@ -49,6 +55,54 @@ export function fetch_board_children(board_id){
             .then(
                 json => dispatch(receive_children(json, board_id))
             )
+
+    }
+}
+
+function link_all_children(){
+    return function(dispatch, getState){
+            
+        //boards: {
+        //    1: {id: 1, lists: [], cards: []},
+        //    2: {id: 2, lists: [], cards: []},
+        //    3: {id: 3, lists: [], cards: []},
+        //}
+
+        //cards: {
+        //    1: { board },
+        //    2: { board }
+        //}
+
+        //lists: {
+        //    1: { board },
+        //    2: { board }
+        //}
+
+        // init state copies
+        const s = getState();
+        const cards = s.trello_data.cards;
+        const lists = s.trello_data.lists;
+
+        let boards = s.trello_data.boards;
+
+        // assign cards to boards
+        Object.keys(cards)
+            .forEach(card_id => {
+                const board_id = cards[card_id].board; 
+                boards[board_id].cards.push(card_id);
+            });
+
+        // assign lists to boards
+        Object.keys(lists)
+            .forEach(list_id => {
+                const board_id = lists[list_id].board; 
+                boards[board_id].lists.push(list_id);
+            });
+
+        // update board states
+        Object.keys(boards)
+            .forEach(id => dispatch(link_children(id, boards[id].lists, boards[id].cards)))
+
     }
 }
 
@@ -78,5 +132,16 @@ export function receive_children_error(error, board_id){
         type: 'RECEIVE_CHILDREN_ERROR',
         error,
         board_id
+    }
+}
+
+export const LINK_CHILDREN = 'LINK_CHILDREN';
+
+export function link_children(board_id, list_ids, card_ids){
+    return {
+        type: 'LINK_CHILDREN',
+        board_id,
+        list_ids,
+        card_ids
     }
 }
