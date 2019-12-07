@@ -14,31 +14,43 @@ class TaskHub extends React.Component{
     handle_select_change = (event) => this.setState({selected_board: event.target.value})
 
     render(){
+
+        const { boards, cards } = this.props;
+        const { selected_board } = this.state;
+
         return(
             <div className="task-hub-container">
+
                 <h4>Tasks</h4>
+
                 <label>
                     Board:
-                    <select value={this.state.selected_board} onChange={this.handle_select_change}>
+                    <select value={selected_board} onChange={this.handle_select_change}>
                         <option value="all">All</option>
                         {
-                            Object.keys(this.props.boards).map(board_id => 
-                                <option value={board_id} key={board_id}>
-                                    {this.props.boards[board_id].name}
-                                </option>
-                            )
+                            Object.keys(boards)
+                                .map(id => <option value={id} key={id}>{ boards[id].name }</option>)
                         }
                     </select>
                 </label>
-                <span>Cards: </span>
-                {
-                    this.state.selected_board === "all" ?
-                        Object.keys(this.props.cards)
-                            .map(card_id => <Task key={card_id} {...this.props.cards[card_id]}/>)
+
+                <span>
+                    Cards:
+                    {
+                        selected_board === "all" ? 
+                            Object.keys(cards).length
                         :
-                        Object.keys(this.props.cards)
-                            .filter(card_id => this.props.cards[card_id].board === this.state.selected_board)
-                            .map(card_id => <Task key={card_id} {...this.props.cards[card_id]}/>)
+                            boards[selected_board].cards.length
+                    }
+                </span>
+
+                {
+                    selected_board === "all" ?
+                        Object.keys(cards)
+                            .map(id => <Task key={id} {...cards[id]}/>)
+                    :
+                        boards[selected_board].cards
+                            .map(id => <Task key={id} {...cards[id]}/>)
                 }
             </div>
         );
