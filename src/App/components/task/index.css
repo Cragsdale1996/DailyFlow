@@ -1,3 +1,7 @@
-.task{
-    border: 1px solid orange;
+.task > h4{
+    font-size: 1.25em;
+}
+
+.task:hover{
+    background-color: lightgray;
 }

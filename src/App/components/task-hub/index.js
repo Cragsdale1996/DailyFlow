@@ -18,6 +18,21 @@ class TaskHub extends React.Component{
         const { boards, cards } = this.props;
         const { selected_board } = this.state;
 
+        const allowed_boards = Object.keys(boards).map(id => <option value={id} key={id}>{ boards[id].name }</option>)
+
+        const allowed_cards = selected_board === "allowed" ?
+            Object.keys(cards).map(id => <Task key={id} {...cards[id]}/>)
+            : boards[selected_board].cards.map(id => <Task key={id} {...cards[id]}/>)
+
+        const card_count = selected_board === "allowed" ? 
+            Object.keys(boards).reduce((running_sum, id) => running_sum + boards[id].cards.length, 0) 
+            : boards[selected_board].cards.length
+
+        const { evens, odds } = allowed_cards.reduce((acc, payload) => {
+            if(acc.index%2 === 0) return { ...acc, evens: [...acc.evens, payload], index: acc.index+1 }
+            else return { ...acc, odds: [...acc.odds, payload], index: acc.index+1 }
+        }, {evens: [], odds: [], index: 0})
+
         return(
             <div className="task-hub-container">
 
@@ -27,31 +42,19 @@ class TaskHub extends React.Component{
                     Board:
                     <select value={selected_board} onChange={this.handle_select_change}>
                         <option value="allowed">Allowed</option>
-                        {
-                            Object.keys(boards)
-                                .map(id => <option value={id} key={id}>{ boards[id].name }</option>)
-                        }
+                        {allowed_boards}
                     </select>
                 </label>
 
                 <span>
                     Cards:
-                    {
-                        selected_board === "allowed" ? 
-                            Object.keys(boards).reduce((running_sum, id) => running_sum + boards[id].cards.length, 0)
-                        :
-                            boards[selected_board].cards.length
-                    }
+                    {card_count}
                 </span>
-
-                {
-                    selected_board === "allowed" ?
-                        Object.keys(cards)
-                            .map(id => <Task key={id} {...cards[id]}/>)
-                    :
-                        boards[selected_board].cards
-                            .map(id => <Task key={id} {...cards[id]}/>)
-                }
+                
+                <div className="row no-gutters">
+                    <div className="col-md-6">{evens}</div>
+                    <div className="col-md-6">{odds}</div>
+                </div>
             </div>
         );
     }

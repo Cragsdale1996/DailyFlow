@@ -22,10 +22,11 @@ class ConfigView extends React.Component {
                               Boards Allowed:
                               {
                                   Object.keys(boards).map(id => 
-                                      <React.Fragment>
+                                      <React.Fragment key={id}>
                                             <br/>
                                             <input 
-                                                type="checkbox" 
+                                                type="checkbox"
+                                                key={id} 
                                                 value={id}
                                                 checked={config.allowed_boards.includes(id)}
                                                 onChange={this.handle_check_change}
