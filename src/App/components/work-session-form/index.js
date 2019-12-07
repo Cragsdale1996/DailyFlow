@@ -54,13 +54,16 @@ class WorkSessionForm extends React.Component {
 
     render(){
 
+        const { name, start, end, location, category } = this.state;
+        const { categories } = this.props;
+
         return(
             <form onSubmit={this.handle_submit}>
                 <label>
                     Name:
                     <input 
                         type="text"
-                        value={this.state.name}
+                        value={name}
                         onChange={this.handle_name_change}
                     />
                 </label>
@@ -69,7 +72,7 @@ class WorkSessionForm extends React.Component {
                     Start:
                     <input 
                         type="datetime-local"
-                        value={this.state.start}
+                        value={start}
                         onChange={this.handle_start_change}
                     />
                 </label>
@@ -78,7 +81,7 @@ class WorkSessionForm extends React.Component {
                     End:
                     <input 
                         type="datetime-local"
-                        value={this.state.end}
+                        value={end}
                         onChange={this.handle_end_change}
                     />
                 </label>
@@ -87,17 +90,17 @@ class WorkSessionForm extends React.Component {
                     Location:
                     <input 
                         type="text"
-                        value={this.state.location}
+                        value={location}
                         onChange={this.handle_location_change}
                     />
                 </label>
                 <br/>
                 <label>
                     Category:
-                    <select value={this.state.category} onChange={this.handle_select_change}>
-                        {Object.keys(this.props.categories).map(category_id => 
+                    <select value={category} onChange={this.handle_select_change}>
+                        {Object.keys(categories).map(category_id => 
                             <option value={category_id} key={category_id}>
-                                {this.props.categories[category_id].name}
+                                {categories[category_id].name}
                             </option>
                         )}
                     </select>

@@ -1,5 +1,3 @@
-// ## WORK SESSIONS ## //
-
 let nextWorkSessionId = 0;
 
 // ADD

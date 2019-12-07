@@ -8,7 +8,7 @@ class TaskHub extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = { selected_board: "all" };
+        this.state = { selected_board: "allowed" };
     }
 
     handle_select_change = (event) => this.setState({selected_board: event.target.value})
@@ -26,7 +26,7 @@ class TaskHub extends React.Component{
                 <label>
                     Board:
                     <select value={selected_board} onChange={this.handle_select_change}>
-                        <option value="all">All</option>
+                        <option value="allowed">Allowed</option>
                         {
                             Object.keys(boards)
                                 .map(id => <option value={id} key={id}>{ boards[id].name }</option>)
@@ -37,15 +37,15 @@ class TaskHub extends React.Component{
                 <span>
                     Cards:
                     {
-                        selected_board === "all" ? 
-                            Object.keys(cards).length
+                        selected_board === "allowed" ? 
+                            Object.keys(boards).reduce((running_sum, id) => running_sum + boards[id].cards.length, 0)
                         :
                             boards[selected_board].cards.length
                     }
                 </span>
 
                 {
-                    selected_board === "all" ?
+                    selected_board === "allowed" ?
                         Object.keys(cards)
                             .map(id => <Task key={id} {...cards[id]}/>)
                     :
@@ -60,8 +60,10 @@ class TaskHub extends React.Component{
 
 const map_state_to_props = (state) => {
     return {
-        boards: state.trello_data.boards,
-        cards: state.trello_data.cards
+        boards: state.config.allowed_boards.reduce((acc, id) => {
+            return {...acc, [id]: state.trello_data.boards[id]};
+        }, {}),
+        cards: state.trello_data.cards,
     }
 }
 

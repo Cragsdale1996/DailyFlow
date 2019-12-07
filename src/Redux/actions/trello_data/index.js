@@ -1,4 +1,5 @@
 import { fetch_boards } from './boards';
+import { allow_all_boards } from '../config';
 
 export * from './boards';
 export * from './lists';
@@ -17,8 +18,9 @@ export function fetch_trello_data(){
         dispatch(fetch_boards())
         .then(() => {
 
-            // Then, fetch each boards' children (cards and lists)
+            // Then, initialize board config and fetch each boards' children (cards and lists)
             const board_ids = Object.keys(getState().trello_data.boards);
+            dispatch(allow_all_boards(board_ids));
             Promise.all( dispatch(fetch_all_boards_children(board_ids)) )
             .then(() => {
 
