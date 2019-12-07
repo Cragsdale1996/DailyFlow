@@ -8,17 +8,19 @@ class WorkSession extends React.Component {
     render(){
         return (
             <div className="work-session">
-                <div>Name: {this.props.name}</div>
-                <div>Time: {this.render_date(this.props.start)} - {this.render_date(this.props.end)}</div>
-                <div>Location: {this.props.location}</div>
-                <div>Category: {this.props.categories[this.props.category].name}</div>
+                <h4>{this.props.name} - <span>({this.props.location})</span></h4>
+                <div>{this.render_date(this.props.start)} - {this.render_date(this.props.end)}</div>
+                <div>{this.props.categories[this.props.category].name}</div>
                 <button onClick={() => this.props.remove_work_session(this.props.id)}>Remove</button>
             </div>
         );
     }
 
     render_date = (date) => {
-        return `${date.getMonth()+1}/${date.getDate()}, ${date.getHours()}:${date.getSeconds()}`
+        let sec_str = date.getSeconds().toString();
+        sec_str = sec_str.length === 1 ? "0"+sec_str : sec_str; 
+
+        return `${date.getHours()}:${sec_str}`
     }
 
 }
