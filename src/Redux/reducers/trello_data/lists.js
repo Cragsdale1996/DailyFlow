@@ -1,9 +1,10 @@
-import { RECEIVE_CHILDREN } from '../../actions/trello_data'; 
+import { RECEIVE_CHILDREN, TOGGLE_LIST } from '../../actions/trello_data'; 
 
 // Lists state diagram:
 
 // lists: {
 //     [id]: {
+//         config: {display: true}
 //         id: #,
 //         name: '...',
 //         board: #id,
@@ -17,6 +18,7 @@ const build_lists = (json, board_id) => {
 
     json.forEach(list => {
         lists_obj[list.id] = {
+            config: {display: true},
             id: list.id,
             name: list.name,
             cards: list.cards.map(card => card.id),
@@ -33,6 +35,14 @@ const lists = (state = {}, action) => {
             return {
                 ...state,
                 ...build_lists(action.json, action.board_id)
+            }
+        case TOGGLE_LIST:
+            return {
+                ...state,
+                [action.id]: {
+                    ...state[action.id],
+                    config: {display: !state[action.id].config.display}
+                }
             }
         default:
             return state;

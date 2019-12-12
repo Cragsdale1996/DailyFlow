@@ -19,6 +19,15 @@ export function receive_lists(json, board_id){
     }
 }
 
+export const TOGGLE_LIST = 'TOGGLE_LIST';
+
+export function toggle_list(id){
+    return {
+        type: 'TOGGLE_LIST',
+        id
+    }
+}
+
 // Individual Error
 export const RECEIVE_LISTS_ERROR = 'RECEIVE_LISTS_ERROR';
 

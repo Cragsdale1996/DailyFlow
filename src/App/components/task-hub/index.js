@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { toggle_list } from "../../../Redux/actions";
 import Task from "../task";
 
 import "./index.css";
@@ -8,14 +9,11 @@ class TaskHub extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = { 
-            selected_board: "allowed",
-            lists: {}
-        };
+        this.state = { selected_board: "allowed" };
     }
 
     handle_select_change = (event) => {
-        const new_board = event.target.value;
+        /*const new_board = event.target.value;
         if(new_board === "allowed"){
             this.setState({
                 selected_board: new_board, 
@@ -29,10 +27,14 @@ class TaskHub extends React.Component{
                 selected_board: new_board,
                 lists: lists_obj
             });
-        }
+        }*/
+
+        const new_board = event.target.value;
+        this.setState({selected_board: new_board});
+
     }
 
-    handle_list_toggle = (event) => {
+    /*handle_list_toggle = (event) => {
         const list_id = event.target.value;
         const lists = this.state.lists;
         this.setState({ 
@@ -44,51 +46,33 @@ class TaskHub extends React.Component{
                }
            }
         });
-    }
-
-    render_list_toggles = () => {
-        return Object.keys(this.state.lists).map(id => 
-            <label>
-                {this.props.lists[id].name} 
-                <input 
-                    type="checkbox"
-                    key={id} 
-                    value={id}
-                    checked={this.state.lists[id].display}
-                    onChange={this.handle_list_toggle}
-                />
-            </label>
-        );
-    }
+    }*/
 
     render(){
 
-        const { boards, cards } = this.props;
-        const { selected_board, lists } = this.state;
+        const { boards, cards, lists } = this.props;
+        const { selected_board } = this.state;
 
-        const toggled_lists = Object.keys(lists).filter(id => lists[id].display === true);
-
-        // Build array of allowed board html options
-        const allowed_boards = Object.keys(boards).map(id => <option value={id} key={id}>{ boards[id].name }</option>)
+        const displayed_lists = Object.keys(lists).filter(id => lists[id].config.display === true);
 
         // Build array of cards for current board selection / collection of toggled lists
-        const allowed_cards = selected_board === "allowed" ?
+        const displayed_cards = selected_board === "allowed" ?
             Object.keys(cards).map(id => <Task key={id} {...cards[id]}/>) :
             boards[selected_board].cards
-                .filter(id => toggled_lists.includes(cards[id].list))
+                .filter(id => displayed_lists.includes(cards[id].list))
                 .map(id => <Task key={id} {...cards[id]}/>)
 
-        const card_count = selected_board === "allowed" ? 
+        /*const card_count = selected_board === "allowed" ? 
             Object.keys(boards).reduce((running_sum, id) => running_sum + boards[id].cards.length, 0) :
             boards[selected_board].cards
-                .filter(id => toggled_lists.includes(cards[id].list))  
-                .length
+                .filter(id => displayed_lists.includes(cards[id].list))  
+                .length*/
 
         // Distribute cards into 2 separate lists (for even split between columns)
-        const { evens, odds } = allowed_cards.reduce((acc, payload) => {
+        const { evens, odds } = displayed_cards.reduce((acc, payload) => {
             return acc.index%2 === 0 ? 
-                { ...acc, evens: [...acc.evens, payload], index: acc.index+1 }
-                : { ...acc, odds: [...acc.odds, payload], index: acc.index+1 }
+                { ...acc, evens: [...acc.evens, payload], index: acc.index+1 } :
+                { ...acc, odds: [...acc.odds, payload], index: acc.index+1 }
         }, {evens: [], odds: [], index: 0})
 
         return(
@@ -100,17 +84,18 @@ class TaskHub extends React.Component{
                     Board:
                     <select value={selected_board} onChange={this.handle_select_change}>
                         <option value="allowed">Allowed</option>
-                        {allowed_boards}
+                        {Object.keys(boards).map(id => 
+                            <option value={id} key={id}>{ 
+                                boards[id].name }
+                            </option>
+                        )}
                     </select>
                 </label>
 
-                <div>
-                    Cards:
-                    {card_count}
-                </div>
+                <div>{this.render_list_toggles()}</div>
 
                 <div>
-                    {this.render_list_toggles()}
+                    Cards: {displayed_cards.length}
                 </div>
 
                 <div className="row no-gutters">
@@ -118,6 +103,23 @@ class TaskHub extends React.Component{
                     <div className="col-md-6">{odds}</div>
                 </div>
             </div>
+        );
+    }
+
+    // display helpers
+    render_list_toggles = () => {
+        if (this.state.selected_board === "allowed") return;
+        return this.props.boards[this.state.selected_board].lists.map(id => 
+            <label>
+                {this.props.lists[id].name} 
+                <input 
+                    type="checkbox"
+                    key={id} 
+                    value={id}
+                    checked={this.props.lists[id].config.display}
+                    onChange={()=>this.props.toggle_list(id)}
+                />
+            </label>
         );
     }
 
@@ -133,9 +135,7 @@ const map_state_to_props = (state) => {
     }
 }
 
-const map_dispatch_to_props = () => {
-    return {};
-}
+const map_dispatch_to_props = { toggle_list };
 
 TaskHub = connect(
     map_state_to_props,
