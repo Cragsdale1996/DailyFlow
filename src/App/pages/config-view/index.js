@@ -10,7 +10,7 @@ class ConfigView extends React.Component {
   
     render() {
 
-      const { boards, config } = this.props;
+      const { boards } = this.props;
 
       return (
           <div className="config-view">
@@ -28,7 +28,7 @@ class ConfigView extends React.Component {
                                                 type="checkbox"
                                                 key={id} 
                                                 value={id}
-                                                checked={config.allowed_boards.includes(id)}
+                                                checked={boards[id].config.display}
                                                 onChange={this.handle_check_change}
                                             />
                                             {boards[id].name} 
@@ -48,8 +48,7 @@ class ConfigView extends React.Component {
 
 const map_state_to_props = (state) => { 
     return { 
-      boards: state.trello_data.boards,
-      config: state.config
+      boards: state.trello_data.boards
     }; 
 };
 

@@ -53,3 +53,12 @@ export function receive_boards_error(error){
         error
     }
 }
+
+export const TOGGLE_BOARD = 'TOGGLE_BOARD';
+
+export function toggle_board(id){
+    return {
+        type: 'TOGGLE_BOARD',
+        board_id: id
+    }
+}

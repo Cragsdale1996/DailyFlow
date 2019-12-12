@@ -13,44 +13,13 @@ class TaskHub extends React.Component{
     }
 
     handle_select_change = (event) => {
-        /*const new_board = event.target.value;
-        if(new_board === "allowed"){
-            this.setState({
-                selected_board: new_board, 
-                lists: {}
-            });
-        }
-        else {
-            const lists_obj = {};
-            this.props.boards[new_board].lists.forEach(id => lists_obj[id] = {id, display: true});
-            this.setState({
-                selected_board: new_board,
-                lists: lists_obj
-            });
-        }*/
-
         const new_board = event.target.value;
         this.setState({selected_board: new_board});
-
     }
-
-    /*handle_list_toggle = (event) => {
-        const list_id = event.target.value;
-        const lists = this.state.lists;
-        this.setState({ 
-           lists: {
-               ...lists,
-               [list_id]: {
-                    ...lists[list_id],
-                    display: !lists[list_id].display
-               }
-           }
-        });
-    }*/
 
     render(){
 
-        const { boards, cards, lists } = this.props;
+        const { allowed_boards, cards, lists } = this.props;
         const { selected_board } = this.state;
 
         const displayed_lists = Object.keys(lists).filter(id => lists[id].config.display === true);
@@ -58,15 +27,9 @@ class TaskHub extends React.Component{
         // Build array of cards for current board selection / collection of toggled lists
         const displayed_cards = selected_board === "allowed" ?
             Object.keys(cards).map(id => <Task key={id} {...cards[id]}/>) :
-            boards[selected_board].cards
+            allowed_boards[selected_board].cards
                 .filter(id => displayed_lists.includes(cards[id].list))
                 .map(id => <Task key={id} {...cards[id]}/>)
-
-        /*const card_count = selected_board === "allowed" ? 
-            Object.keys(boards).reduce((running_sum, id) => running_sum + boards[id].cards.length, 0) :
-            boards[selected_board].cards
-                .filter(id => displayed_lists.includes(cards[id].list))  
-                .length*/
 
         // Distribute cards into 2 separate lists (for even split between columns)
         const { evens, odds } = displayed_cards.reduce((acc, payload) => {
@@ -84,9 +47,9 @@ class TaskHub extends React.Component{
                     Board:
                     <select value={selected_board} onChange={this.handle_select_change}>
                         <option value="allowed">Allowed</option>
-                        {Object.keys(boards).map(id => 
+                        {Object.keys(allowed_boards).map(id => 
                             <option value={id} key={id}>{ 
-                                boards[id].name }
+                                allowed_boards[id].name }
                             </option>
                         )}
                     </select>
@@ -109,7 +72,7 @@ class TaskHub extends React.Component{
     // display helpers
     render_list_toggles = () => {
         if (this.state.selected_board === "allowed") return;
-        return this.props.boards[this.state.selected_board].lists.map(id => 
+        return this.props.allowed_boards[this.state.selected_board].lists.map(id => 
             <label>
                 {this.props.lists[id].name} 
                 <input 
@@ -126,10 +89,20 @@ class TaskHub extends React.Component{
 }
 
 const map_state_to_props = (state) => {
+
+    const allowed_boards = Object.keys(state.trello_data.boards)
+                            .reduce((acc, id) => {
+                                if(state.trello_data.boards[id].config.display){
+                                    return {
+                                        ...acc, 
+                                        [id]: state.trello_data.boards[id]
+                                    };
+                                }
+                                else return {...acc};
+                            }, {});
+
     return {
-        boards: state.config.allowed_boards.reduce((acc, id) => {
-            return {...acc, [id]: state.trello_data.boards[id]};
-        }, {}),
+        allowed_boards,
         cards: state.trello_data.cards,
         lists: state.trello_data.lists
     }
