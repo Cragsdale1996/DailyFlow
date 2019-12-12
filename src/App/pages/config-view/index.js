@@ -31,7 +31,7 @@ class ConfigView extends React.Component {
                                                 checked={config.allowed_boards.includes(id)}
                                                 onChange={this.handle_check_change}
                                             />
-                                          {boards[id].name} 
+                                            {boards[id].name} 
                                       </React.Fragment>
                                   )
                               }

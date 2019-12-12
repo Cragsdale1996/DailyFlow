@@ -6,13 +6,8 @@ import "./index.css";
 class Task extends React.Component{
 
     render(){
-        const style = {
-            border: `1px solid orange`,
-            borderRadius: '10px'
-        }
-
         return(
-            <div style={style} className="task">
+            <div className="task">
                 <h4>{this.props.name}</h4>
                 {/*<p>{this.props.description}</p>*/}
             </div>

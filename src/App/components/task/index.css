@@ -1,3 +1,10 @@
+.task{
+    border: 1px solid orange;
+    border-radius: 10px;
+    margin: 5px 5px 5px 5px;
+    padding: 2px 2px 2px 2px;
+}
+
 .task > h4{
     font-size: 1.25em;
 }
