@@ -41,7 +41,15 @@ class WorkSessionForm extends React.Component {
 
     handle_submit = (event) => { 
         event.preventDefault();
-        this.props.add_work_session(this.state);
+
+        //send full category to work session
+        const new_session = {
+            ...this.state,
+            category: this.props.categories[this.state.category]
+        };
+
+        this.props.add_work_session(new_session);
+        
         let [s, e] = this.get_start_end();
         this.setState({
             name:     '',
@@ -114,7 +122,7 @@ class WorkSessionForm extends React.Component {
 }
 
 const map_state_to_props = (state) => { 
-    return { categories: state.work_sessions.categories }; 
+    return { categories: state.categories.work_session }; 
 };
 const map_dispatch_to_props = { add_work_session }
 

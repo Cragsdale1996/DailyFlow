@@ -27,7 +27,7 @@ class WorkSession extends React.Component {
 
 const map_state_to_props = (state) => {
     return {
-        categories: state.work_sessions.categories
+        categories: state.categories.work_session
     };
 }
 

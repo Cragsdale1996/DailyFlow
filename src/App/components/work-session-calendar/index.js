@@ -78,8 +78,8 @@ class WorkSessionCalendar extends React.Component {
 
 const map_state_to_props = (state) => {
 
-    const daily_events = Object.keys(state.work_sessions.items).map(
-        session_id => state.work_sessions.items[session_id].daily_event
+    const daily_events = Object.keys(state.work_sessions).map(
+        session_id => state.work_sessions[session_id].daily_event
     );
 
     return { daily_events: daily_events };

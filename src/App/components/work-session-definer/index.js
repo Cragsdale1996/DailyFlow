@@ -9,10 +9,10 @@ class WorkSessionDefiner extends React.Component{
         return(
             <div className="work-session-definer-container">
                 <h4>Work Sessions</h4>
-                {Object.keys(this.props.work_sessions.items).map(session_id =>
+                {Object.keys(this.props.work_sessions).map(session_id =>
                     <WorkSession 
                         key={session_id}
-                        {...this.props.work_sessions.items[session_id]}
+                        {...this.props.work_sessions[session_id]}
                     />
                 )}
             </div>

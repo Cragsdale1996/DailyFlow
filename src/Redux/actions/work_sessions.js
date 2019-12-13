@@ -31,3 +31,13 @@ export function update_work_session(id, updated_session){
         updated_session
     }
 }
+
+export const MAP_CARD_TO_SESSION = 'MAP_CARD_TO_SESSION';
+
+export function map_card_to_session(card_id, session_id){
+    return {
+        type: MAP_CARD_TO_SESSION,
+        session_id,
+        card_id
+    }
+}
