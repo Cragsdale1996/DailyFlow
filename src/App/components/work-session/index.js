@@ -6,12 +6,18 @@ import './index.css';
 class WorkSession extends React.Component {
 
     render(){
+
+        const {name, location, start,end, min_duration, categories, category, remove_work_session, id} = this.props;
+
         return (
             <div className="work-session">
-                <h4>{this.props.name} - <span>({this.props.location})</span></h4>
-                <div>{this.render_date(this.props.start)} - {this.render_date(this.props.end)}</div>
-                <div>{this.props.categories[this.props.category].name}</div>
-                <button onClick={() => this.props.remove_work_session(this.props.id)}>Remove</button>
+                <h4>{name} - <span>({location})</span></h4>
+                <div>
+                    {this.render_date(start)} - {this.render_date(end)}, 
+                    Duration: {min_duration} min
+                </div>
+                <div>{categories[category].name}</div>
+                <button onClick={() => remove_work_session(id)}>Remove</button>
             </div>
         );
     }

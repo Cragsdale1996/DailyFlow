@@ -34,10 +34,12 @@ export function update_work_session(id, updated_session){
 
 export const MAP_CARD_TO_SESSION = 'MAP_CARD_TO_SESSION';
 
-export function map_card_to_session(card_id, session_id){
+export function map_card_to_session(card_id, session_id, start_min, end_min){
     return {
         type: MAP_CARD_TO_SESSION,
         session_id,
-        card_id
+        card_id,
+        start_min,
+        end_min
     }
 }

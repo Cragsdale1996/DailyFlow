@@ -14,6 +14,7 @@ import {
 //         location,
 //         start,
 //         end,
+//         min_duration,
 //         category,
 //         mapped_cards: {},
 //         daily_event: {
@@ -38,6 +39,7 @@ const build_work_session = (session, id) => {
         category:     session.category.id,
         start:        start_date,
         end:          end_date,
+        min_duration: (end_date - start_date) / (1000*60),
         mapped_cards: {},
         daily_event: {
             title: `${session.name}, ${session.location}`,
@@ -88,7 +90,8 @@ const work_sessions = (state = {}, action) => {
                         ...state[action.session_id].mapped_cards,
                         [action.session_id]: {
                             id: action.session_id,
-                            duration: 60
+                            start_min: action.start_min,
+                            end_min: action.end_min
                         }
                     }
                 }
