@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggle_list } from "../../../Redux/actions";
+import { fetch_trello_data } from '../../../Redux/actions';
 import Task from "../task";
 
 import "./index.css";
@@ -41,7 +42,7 @@ class TaskHub extends React.Component{
         return(
             <div className="task-hub-container">
 
-                <h4>Tasks</h4>
+                <h4>Tasks <button onClick={()=>this.props.fetch_trello_data()}>Refresh</button></h4>
 
                 <label>
                     Board:
@@ -108,7 +109,10 @@ const map_state_to_props = (state) => {
     }
 }
 
-const map_dispatch_to_props = { toggle_list };
+const map_dispatch_to_props = { 
+    toggle_list,
+    fetch_trello_data
+ };
 
 TaskHub = connect(
     map_state_to_props,
