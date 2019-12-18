@@ -15,6 +15,7 @@ import {
 //         start,
 //         end,
 //         min_duration,
+//         remaining_duration,
 //         category,
 //         mapped_cards: {},
 //         daily_event: {
@@ -30,16 +31,17 @@ const build_work_session = (session, id) => {
     const start_date = typeof session.start === 'string' ? new Date(session.start) : session.start
     const end_date = typeof session.end === 'string' ? new Date(session.end) : session.end
 
-    let session_obj = {};
+    const min_duration = (end_date - start_date) / (1000*60);
 
-    session_obj[id] = {
-        id:           id,
-        name:         session.name,
-        location:     session.location,
-        category:     session.category.id,
-        start:        start_date,
-        end:          end_date,
-        min_duration: (end_date - start_date) / (1000*60),
+    return {
+        id:                 id,
+        name:               session.name,
+        location:           session.location,
+        category:           session.category.id,
+        start:              start_date,
+        end:                end_date,
+        min_duration:       min_duration,
+        remaining_duration: min_duration,
         mapped_cards: {},
         daily_event: {
             title: `${session.name}, ${session.location}`,
@@ -47,9 +49,7 @@ const build_work_session = (session, id) => {
             end:   end_date,
             color: session.category.color
         }
-    }    
-
-    return session_obj;
+    };
 }
 
 const work_sessions = (state = {}, action) => {
@@ -59,22 +59,22 @@ const work_sessions = (state = {}, action) => {
 
             return {
                 ...state,
-                ...build_work_session(action.new_session, action.id)
+                [action.id]: build_work_session(action.new_session, action.id)
             };
 
         case REMOVE_WORK_SESSION:
 
-            return Object.keys(state.items)
+            return Object.keys(state)
                     .reduce((acc, key) => (key !== action.id.toString()) ? 
-                        {...acc, [key]: state.items[key]} :
+                        {...acc, [key]: state[key]} :
                         acc
                     , {}); 
 
         case UPDATE_WORK_SESSION:
 
-            const updated_items = Object.keys(state.items)
+            const updated_items = Object.keys(state)
                                     .map(id => (id !== action.id) ? 
-                                        state.items[id] : 
+                                        state[id]: 
                                         build_work_session(action.updated_section, action.id)
                                     )
                                     
