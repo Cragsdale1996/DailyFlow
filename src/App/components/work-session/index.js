@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { remove_work_session } from "../../../Redux/actions";
+import { remove_work_session, toggle_work_session } from "../../../Redux/actions";
 import './index.css';
 
 class WorkSession extends React.Component {
@@ -17,8 +17,10 @@ class WorkSession extends React.Component {
             total_duration,
             remaining_duration, 
             mapped_cards,
+            selected,
             // Dispatch
             remove_work_session,
+            toggle_work_session,
             // Calculated Props
             categories, 
             category,
@@ -27,7 +29,10 @@ class WorkSession extends React.Component {
         } = this.props;
 
         return (
-            <div className="work-session">
+            <div 
+                onClick={()=>toggle_work_session(id)}
+                style={{background: selected ? 'lightgrey': 'trasparent'}}
+                className="work-session">
                 <h4>{name} - <span>({location})</span></h4>
                 <div>{this.render_date(start)} - {this.render_date(end)}</div>
                 <div>Remaining Duration: {remaining_duration}/{total_duration} min</div>
@@ -69,7 +74,10 @@ const map_state_to_props = (state) => {
     };
 }
 
-const map_dispatch_to_props = { remove_work_session };
+const map_dispatch_to_props = { 
+    remove_work_session,
+    toggle_work_session
+ };
 
 WorkSession = connect(
     map_state_to_props,
