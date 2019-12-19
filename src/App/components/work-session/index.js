@@ -31,7 +31,7 @@ class WorkSession extends React.Component {
         return (
             <div 
                 onClick={()=>toggle_work_session(id)}
-                style={{background: selected ? 'lightgrey': 'trasparent'}}
+                style={{backgroundColor: (selected === true) ? 'lightgrey': 'transparent'}}
                 className="work-session">
                 <h4>{name} - <span>({location})</span></h4>
                 <div>{this.render_date(start)} - {this.render_date(end)}</div>
@@ -44,10 +44,10 @@ class WorkSession extends React.Component {
     }
 
     render_date = (date) => {
-        let sec_str = date.getSeconds().toString();
-        sec_str = sec_str.length === 1 ? "0"+sec_str : sec_str; 
+        let min_str = date.getMinutes().toString();
+        min_str = min_str.length === 1 ? "0"+min_str : min_str; 
 
-        return `${date.getHours()}:${sec_str}`
+        return `${date.getHours()}:${min_str}`
     }
 
     render_mapped_cards = (mapped_cards) => {
