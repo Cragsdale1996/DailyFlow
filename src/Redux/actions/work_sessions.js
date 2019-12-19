@@ -52,3 +52,12 @@ export function remove_card_from_session(card_id, session_id){
         session_id
     }
 }
+
+export const TOGGLE_WORK_SESSION = 'TOGGLE_WORK_SESSION';
+
+export function toggle_work_session(id){
+    return {
+        type: TOGGLE_WORK_SESSION,
+        id
+    }
+}

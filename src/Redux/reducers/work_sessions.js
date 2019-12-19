@@ -3,7 +3,8 @@ import {
     REMOVE_WORK_SESSION,
     UPDATE_WORK_SESSION,
     MAP_CARD_TO_SESSION,
-    REMOVE_CARD_FROM_SESSION
+    REMOVE_CARD_FROM_SESSION,
+    TOGGLE_WORK_SESSION
 } from '../actions'
 
 // work_sessions state diagram:
@@ -18,6 +19,7 @@ import {
 //         total_duration,
 //         remaining_duration,
 //         category,
+//         selected,
 //         mapped_cards: {
 //             [id]: {
 //                 id,
@@ -51,6 +53,7 @@ const build_work_session = (session, id) => {
         end:                end_date,
         total_duration:     min_duration,
         remaining_duration: min_duration,
+        selected:           false,
         mapped_cards: {},
         daily_event: {
             title: `${session.name}, ${session.location}`,
@@ -61,7 +64,7 @@ const build_work_session = (session, id) => {
     };
 }
 
-const work_sessions = (state = {}, action) => {
+const work_sessions = (state = {selected_session: null}, action) => {
     switch (action.type) {
 
         case ADD_WORK_SESSION: {
@@ -93,6 +96,16 @@ const work_sessions = (state = {}, action) => {
                                     
             return {...updated_items};
         
+        }
+
+        case TOGGLE_WORK_SESSION: {
+            return {
+                ...state,
+                [action.id]: {
+                    ...state[action.id],
+                    selected: !state[action.id].selected
+                }
+            }
         }
 
         case MAP_CARD_TO_SESSION: {

@@ -34,7 +34,7 @@ class WorkSession extends React.Component {
                     Remaining Duration: {remaining_duration}/{total_duration} min
                 </div>
                 <div>{categories[category].name}</div>
-                <div>{show_cards && render_mapped_cards(mapped_cards)}</div>
+                <div>{show_cards && this.render_mapped_cards(mapped_cards)}</div>
                 <button onClick={() => remove_work_session(id)}>Remove</button>
             </div>
         );
