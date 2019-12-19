@@ -20,42 +20,63 @@ const initial_state = {
 
 const fetch_status = (state = initial_state, action) => {
     switch(action.type){
-        case REQUEST_BOARDS:
+        case REQUEST_BOARDS: {
+
             return {
                 ...state,
                 boards_pending: true
             }
-        case RECEIVE_BOARDS:
+
+        }
+        case RECEIVE_BOARDS: {
+
             return {
                 ...state,
                 boards_pending: false,
                 boards_error: false
             }
-        case RECEIVE_BOARDS_ERROR:
+
+        }
+        case RECEIVE_BOARDS_ERROR: {
+
             return {
                 ...state,
                 boards_pending: false,
                 boards_error: true
             }
-        case REQUEST_CHILDREN:
+
+        }
+        case REQUEST_CHILDREN: {
+
             return {
                 ...state,
                 boards_children_errors:  state.boards_children_errors.filter(id => id !== action.board_id),
                 boards_children_pending: state.boards_children_pending.concat(action.board_id)
             }
-        case RECEIVE_CHILDREN:
+
+        }
+        case RECEIVE_CHILDREN: {
+
             return {
                 ...state,
                 boards_children_pending: state.boards_children_pending.filter(id => id !== action.board_id)
             }
-        case RECEIVE_CHILDREN_ERROR:
+
+        }
+        case RECEIVE_CHILDREN_ERROR: {
+
             return {
                 ...state,
                 boards_children_errors:  state.boards_children_errors.concat(action.board_id),
                 boards_children_pending: state.boards_children_pending.filter(id => id !== action.board_id)
             }
-        default:
+
+        }
+        default: {
+
             return state;
+            
+        }
     }
 }
 

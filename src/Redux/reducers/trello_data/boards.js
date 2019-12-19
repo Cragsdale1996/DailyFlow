@@ -34,12 +34,17 @@ const build_boards = (json) => {
 
 const boards = (state = {}, action) => {
     switch(action.type){
-        case RECEIVE_BOARDS:
+        case RECEIVE_BOARDS: {
+
             return {
                 ...state,
                 ...build_boards(action.json)
             }
-        case LINK_CHILDREN:
+
+        }
+
+        case LINK_CHILDREN: {
+
             return {
                 ...state,
                 [action.board_id]: {
@@ -48,7 +53,11 @@ const boards = (state = {}, action) => {
                     cards: action.card_ids
                 }
             }
-        case TOGGLE_BOARD:
+
+        }
+
+        case TOGGLE_BOARD: {
+
             return {
                 ...state,
                 [action.board_id]: {
@@ -56,8 +65,14 @@ const boards = (state = {}, action) => {
                     config: {display: !state[action.board_id].config.display}
                 }
             }
-        default:
+
+        }
+
+        default: {
+
             return state;
+
+        }
     }       
 }
 

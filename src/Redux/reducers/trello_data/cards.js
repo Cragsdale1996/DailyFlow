@@ -37,13 +37,20 @@ const build_cards = (json, board_id) => {
 
 const cards = (state = {}, action) => {
     switch(action.type){
-        case RECEIVE_CHILDREN:
+        case RECEIVE_CHILDREN: {
+
             return {
                 ...state,
                 ...build_cards(action.json, action.board_id)
             }
-        default:
+
+        }
+
+        default: {
+
             return state;
+
+        }
     }
 }
 

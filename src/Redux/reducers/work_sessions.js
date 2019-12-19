@@ -63,14 +63,16 @@ const build_work_session = (session, id) => {
 const work_sessions = (state = {}, action) => {
     switch (action.type) {
 
-        case ADD_WORK_SESSION:
+        case ADD_WORK_SESSION: {
 
             return {
                 ...state,
                 [action.id]: build_work_session(action.new_session, action.id)
             };
 
-        case REMOVE_WORK_SESSION:
+        }
+
+        case REMOVE_WORK_SESSION: {
 
             return Object.keys(state)
                     .reduce((acc, key) => (key !== action.id.toString()) ? 
@@ -78,7 +80,9 @@ const work_sessions = (state = {}, action) => {
                         acc
                     , {}); 
 
-        case UPDATE_WORK_SESSION:
+        }
+
+        case UPDATE_WORK_SESSION: {
 
             const updated_items = Object.keys(state)
                                     .map(id => (id !== action.id) ? 
@@ -87,10 +91,12 @@ const work_sessions = (state = {}, action) => {
                                     )
                                     
             return {...updated_items};
+        
+        }
 
-        case MAP_CARD_TO_SESSION:
+        case MAP_CARD_TO_SESSION: {
 
-            const mapped_cards = state[action.session_id].mapped_cards;
+            let mapped_cards = state[action.session_id].mapped_cards;
 
             // auto assign place based on highest existing place (# of mapped cards)
             // will be used to determine the order cards are displayed in
@@ -127,9 +133,11 @@ const work_sessions = (state = {}, action) => {
                 }
             }
 
-        case REMOVE_CARD_FROM_SESSION:
+        }
 
-            const mapped_cards = state[action.session_id].mapped_cards;
+        case REMOVE_CARD_FROM_SESSION: {
+
+            let mapped_cards = state[action.session_id].mapped_cards;
 
             return {
                 ...state,
@@ -143,10 +151,15 @@ const work_sessions = (state = {}, action) => {
                                     , {})
                 }
             }
+        
+        }
 
         //case SET_CARD_DURATION
-        default:
+        default: {
+            
             return state
+        
+        }
     }
 }
 

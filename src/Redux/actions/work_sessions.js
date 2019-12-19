@@ -42,3 +42,13 @@ export function map_card_to_session(card_id, session_id, duration){
         duration
     }
 }
+
+export const REMOVE_CARD_FROM_SESSION = 'REMOVE_CARD_FROM_SESSION';
+
+export function remove_card_from_session(card_id, session_id){
+    return {
+        type: REMOVE_CARD_FROM_SESSION,
+        card_id,
+        session_id
+    }
+}

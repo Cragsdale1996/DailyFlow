@@ -7,16 +7,32 @@ class WorkSession extends React.Component {
 
     render(){
 
-        const {name, location, start,end, min_duration, categories, category, remove_work_session, id} = this.props;
+        const {
+            // Session Props
+            name, 
+            location, 
+            start,
+            end, 
+            total_duration,
+            remaining_duration, 
+            remove_work_session, 
+            id,
+            // Calculated Props
+            categories, 
+            category,
+            // Display Props
+            show_cards
+        } = this.props;
 
         return (
             <div className="work-session">
                 <h4>{name} - <span>({location})</span></h4>
                 <div>
                     {this.render_date(start)} - {this.render_date(end)}, 
-                    Duration: {min_duration} min
+                    Remaining Duration: {remaining_duration}/{total_duration} min
                 </div>
                 <div>{categories[category].name}</div>
+                <div>{show_cards && render_mapped_cards()}</div>
                 <button onClick={() => remove_work_session(id)}>Remove</button>
             </div>
         );

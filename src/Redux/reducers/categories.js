@@ -40,8 +40,11 @@ const initial_state = {
 
 const categories = (state = initial_state, action) => {
     switch (action.type) {
-        default:
+        default: {
+
             return state
+
+        }
     }
 }
 

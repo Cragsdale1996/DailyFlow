@@ -31,12 +31,17 @@ const build_lists = (json, board_id) => {
 
 const lists = (state = {}, action) => {
     switch(action.type){
-        case RECEIVE_CHILDREN:
+        case RECEIVE_CHILDREN: {
+
             return {
                 ...state,
                 ...build_lists(action.json, action.board_id)
             }
-        case TOGGLE_LIST:
+
+        }
+
+        case TOGGLE_LIST: {
+
             return {
                 ...state,
                 [action.id]: {
@@ -44,8 +49,14 @@ const lists = (state = {}, action) => {
                     config: {display: !state[action.id].config.display}
                 }
             }
-        default:
+
+        }
+
+        default: {
+         
             return state;
+            
+        }
     }
 }
 
