@@ -14,10 +14,18 @@ import {
 //         location,
 //         start,
 //         end,
-//         min_duration,
+//         total_duration,
 //         remaining_duration,
 //         category,
-//         mapped_cards: {},
+//         mapped_cards: {
+//             [id]: {
+//                 id,
+//                 duration,
+//                 place,
+//                 start_min,
+//                 end_min
+//             }
+//         },
 //         daily_event: {
 //             title,
 //             start,
@@ -40,7 +48,7 @@ const build_work_session = (session, id) => {
         category:           session.category.id,
         start:              start_date,
         end:                end_date,
-        min_duration:       min_duration,
+        total_duration:     min_duration,
         remaining_duration: min_duration,
         mapped_cards: {},
         daily_event: {
@@ -82,18 +90,57 @@ const work_sessions = (state = {}, action) => {
 
         case MAP_CARD_TO_SESSION:
 
+            const mapped_cards = state[action.session_id].mapped_cards;
+
+            // auto assign place based on highest existing place (# of mapped cards)
+            // will be used to determine the order cards are displayed in
+
+            const place = mapped_cards.length + 1;
+
+            // determine start and end based on duration, place and total_duration
+
+            let start_min;
+            
+            if (place === 1) start_min = 0;
+            else {
+                prev_card = Object.keys(mapped_cards).find(id => mapped_cards[id].place === place-1);
+                start_min = prev_card.end_min;
+            }
+
+            const end_min = start_min + action.duration;
+
             return {
                 ...state,
                 [action.session_id]: {
                     ...state[action.session_id],
+                    remaining_duration: state[action.session_id].remaining_duration - action.duration,
                     mapped_cards: {
-                        ...state[action.session_id].mapped_cards,
+                        ...mapped_cards,
                         [action.session_id]: {
                             id: action.session_id,
-                            start_min: action.start_min,
-                            end_min: action.end_min
+                            duration: action.duration,
+                            place: place,
+                            start_min: start_min,
+                            end_min: end_min
                         }
                     }
+                }
+            }
+
+        case REMOVE_CARD_FROM_SESSION:
+
+            const mapped_cards = state[action.session_id].mapped_cards;
+
+            return {
+                ...state,
+                [action.session_id]: {
+                    ...state[action.session_id],
+                    remaining_duration: state[action.session_id].remaining_duration + mapped_cards[action.card_id].duration,
+                    mapped_cards: Object.keys(mapped_cards)
+                                    .reduce((acc, id) => (id !== action.card_id.toString()) ? 
+                                        {...acc, [id]: mapped_cards[id]} :
+                                        acc
+                                    , {})
                 }
             }
 
