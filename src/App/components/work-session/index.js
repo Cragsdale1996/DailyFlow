@@ -9,14 +9,16 @@ class WorkSession extends React.Component {
 
         const {
             // Session Props
+            id,
             name, 
             location, 
             start,
             end, 
             total_duration,
             remaining_duration, 
-            remove_work_session, 
-            id,
+            mapped_cards,
+            // Dispatch
+            remove_work_session,
             // Calculated Props
             categories, 
             category,
@@ -32,7 +34,7 @@ class WorkSession extends React.Component {
                     Remaining Duration: {remaining_duration}/{total_duration} min
                 </div>
                 <div>{categories[category].name}</div>
-                <div>{show_cards && render_mapped_cards()}</div>
+                <div>{show_cards && render_mapped_cards(mapped_cards)}</div>
                 <button onClick={() => remove_work_session(id)}>Remove</button>
             </div>
         );
@@ -43,6 +45,22 @@ class WorkSession extends React.Component {
         sec_str = sec_str.length === 1 ? "0"+sec_str : sec_str; 
 
         return `${date.getHours()}:${sec_str}`
+    }
+
+    render_mapped_cards = (mapped_cards) => {
+        return Object.keys(mapped_cards)
+                .map(id => mapped_cards[id])
+                .sort((first, second) => {
+                    if(first.place > second.place) return 1;
+                    if(first.place < second.place) return -1;
+                    return 0;
+                })
+                .map(card => 
+                <div key={card.id}>
+                    <p>{card.name}</p>
+                    <p>duration: {card.duration}</p>
+                    <p>start: {card.start_min}, end: {card.end_min}</p>
+                </div>)
     }
 
 }

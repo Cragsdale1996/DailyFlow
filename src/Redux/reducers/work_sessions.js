@@ -2,7 +2,8 @@ import {
     ADD_WORK_SESSION,
     REMOVE_WORK_SESSION,
     UPDATE_WORK_SESSION,
-    MAP_CARD_TO_SESSION
+    MAP_CARD_TO_SESSION,
+    REMOVE_CARD_FROM_SESSION
 } from '../actions'
 
 // work_sessions state diagram:
@@ -109,7 +110,7 @@ const work_sessions = (state = {}, action) => {
             
             if (place === 1) start_min = 0;
             else {
-                prev_card = Object.keys(mapped_cards).find(id => mapped_cards[id].place === place-1);
+                const prev_card = Object.keys(mapped_cards).find(id => mapped_cards[id].place === place-1);
                 start_min = prev_card.end_min;
             }
 
@@ -156,7 +157,7 @@ const work_sessions = (state = {}, action) => {
 
         //case SET_CARD_DURATION
         default: {
-            
+
             return state
         
         }
