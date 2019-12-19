@@ -29,10 +29,8 @@ class WorkSession extends React.Component {
         return (
             <div className="work-session">
                 <h4>{name} - <span>({location})</span></h4>
-                <div>
-                    {this.render_date(start)} - {this.render_date(end)}, 
-                    Remaining Duration: {remaining_duration}/{total_duration} min
-                </div>
+                <div>{this.render_date(start)} - {this.render_date(end)}</div>
+                <div>Remaining Duration: {remaining_duration}/{total_duration} min</div>
                 <div>{categories[category].name}</div>
                 <div>{show_cards && this.render_mapped_cards(mapped_cards)}</div>
                 <button onClick={() => remove_work_session(id)}>Remove</button>

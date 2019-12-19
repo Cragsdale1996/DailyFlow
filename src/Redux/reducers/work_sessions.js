@@ -64,7 +64,7 @@ const build_work_session = (session, id) => {
     };
 }
 
-const work_sessions = (state = {selected_session: null}, action) => {
+const work_sessions = (state = {}, action) => {
     switch (action.type) {
 
         case ADD_WORK_SESSION: {

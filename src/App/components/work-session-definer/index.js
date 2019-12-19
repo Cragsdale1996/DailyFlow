@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import WorkSession from '../work-session';
+import { toggle_work_session } from '../../../Redux/actions'
 
 import "./index.css";
 
@@ -12,6 +13,7 @@ class WorkSessionDefiner extends React.Component{
                 {Object.keys(this.props.work_sessions).map(session_id =>
                     <WorkSession 
                         key={session_id}
+                        onClick={()=>toggle_work_session(session_id)}
                         {...this.props.work_sessions[session_id]}
                     />
                 )}
@@ -27,7 +29,7 @@ const map_state_to_props = (state) => {
 }
 
 const map_dispatch_to_props = () => {
-    return {};
+    return { toggle_work_session };
 }
 
 WorkSessionDefiner = connect(
